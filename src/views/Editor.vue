@@ -11,15 +11,13 @@
       @change="onChange"
       ref="editor"
     />
-    <p v-if="error">
-      {{ error }}
+    <p v-if="$store.state.error">
+      {{ $store.state.error }}
     </p>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 import MonacoEditor from 'vue-monaco'
 
 export default {
@@ -30,9 +28,6 @@ export default {
       code: '',
       decorations: [],
     }
-  },
-  computed: {
-    ...mapState(['error']),
   },
   methods: {
     onChange (newCode, event) {
