@@ -1,26 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="root">
+    <button @click="$store.commit('run')">run code</button>
+    <ul>
+      <li v-for="view in views" :key="view" @click="changeView(view)">{{ view }}</li>
+    </ul>
+    {{ $store.state.view }}
+    <!-- https://vuejs.org/v2/guide/components.html#Dynamic-Components -->
+    <keep-alive>
+      <component :is="$store.state.view"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import * as viewComponents from '@/views'
 
 export default {
   name: 'app',
+  data: function () {
+    return {
+      views: Object.keys(viewComponents),
+    }
+  },
   components: {
-    HelloWorld
-  }
+    ...viewComponents,
+  },
+  methods: {
+    changeView (view) {
+      this.$store.commit('changeView', { view })
+    },
+  },
 }
 </script>
+
 <style lang="stylus">
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+html, body, .root {
+  height: 100%;
+}
 </style>
