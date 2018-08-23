@@ -1,8 +1,5 @@
-const MonocoEditorPlugin = require('monaco-editor-webpack-plugin')
-
 module.exports = {
   chainWebpack: (config) => {
-    config.plugin('monaco').use(MonocoEditorPlugin)
     config.module
       .rule('text')
       .test(/\.raw.js$/)
