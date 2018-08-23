@@ -81,9 +81,6 @@ export default new Vuex.Store({
     spritesheet: new Array(CANVAS_SIZE ** 2 * 4),
   },
   mutations: {
-    changeCode (state, { start, text, deleteLength }) {
-      state.code = state.code.slice(0, start) + text + state.code.slice(start + deleteLength)
-    },
     changeView (state, { view }) {
       state.view = view
     },

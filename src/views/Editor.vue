@@ -1,15 +1,9 @@
 <template>
   <div class="root">
-    <monaco-editor
+    <codemirror
       class="editor"
-      language="javascript"
-      v-model="code"
-      :options="{
-        selectOnLineNumbers: true,
-        fontSize: 50,
-      }"
-      @change="onChange"
-      ref="editor"
+      :options="cmOptions"
+      v-model="$store.state.code"
     />
     <p v-if="$store.state.error">
       {{ $store.state.error }}
@@ -18,37 +12,22 @@
 </template>
 
 <script>
-import MonacoEditor from 'vue-monaco'
+import { codemirror } from 'vue-codemirror'
+
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/lib/codemirror.css'
 
 export default {
   name: 'editor',
-  components: { MonacoEditor },
+  components: { codemirror },
   data () {
     return {
-      code: '',
-      decorations: [],
+      cmOptions: {
+        tabSize: 2,
+        mode: 'text/javascript',
+        lineNumbers: true,
+      },
     }
-  },
-  methods: {
-    onChange (newCode, event) {
-    /*
-      if (this.$state.state.error) {
-        this.decorations = this.editor.deltaDecorations(this.decorations, [])
-      }
-
-*/
-
-      const { changes: [e] } = event
-
-      this.$store.commit('changeCode', {
-        start: e.rangeOffset,
-        deleteLength: e.rangeLength,
-        text: e.text,
-      })
-    },
-  },
-  mount () {
-    window.addEventListener('resize', () => this.$refs.editor.layout())
   },
 }
 </script>

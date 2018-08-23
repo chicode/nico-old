@@ -3,7 +3,6 @@
 
 if (typeof draw !== 'function') throw new Error('You must define a "draw" function.')
 
-console.log('fuck')
 const UPDATE_WAIT = 3
 
 function rect (x, y, width, height, outline = false, color = null) {
@@ -17,6 +16,7 @@ function rect (x, y, width, height, outline = false, color = null) {
 
 const sprites = []
 
+// for caching
 function sprite (i, x, y) {
   if (!sprites[i]) {
     sprites[i] = spriteCtx.getImageData(
