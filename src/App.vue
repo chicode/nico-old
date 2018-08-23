@@ -21,13 +21,13 @@ import * as viewComponents from '@/views'
 
 export default {
   name: 'App',
+  components: {
+    ...viewComponents,
+  },
   data: function () {
     return {
       views: Object.keys(viewComponents),
     }
-  },
-  components: {
-    ...viewComponents,
   },
   methods: {
     changeView (view) {

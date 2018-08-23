@@ -22,7 +22,19 @@ function initCanvas (canvas) {
 }
 
 export default {
-  name: 'sprite',
+  name: 'Sprite',
+
+  data: function () {
+    return {
+      mainCtx: null,
+      mouseDown: false,
+      tool: 'pencil',
+      toolOptions: {
+        width: 1,
+        color: 'black',
+      },
+    }
+  },
 
   mounted () {
     this.initMain()
@@ -37,18 +49,6 @@ export default {
 
   updated () {
     this.updateCanvas()
-  },
-
-  data: function () {
-    return {
-      mainCtx: null,
-      mouseDown: false,
-      tool: 'pencil',
-      toolOptions: {
-        width: 1,
-        color: 'black',
-      },
-    }
   },
 
   methods: {

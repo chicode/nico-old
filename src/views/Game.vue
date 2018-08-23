@@ -13,7 +13,7 @@ import { mapState } from 'vuex'
 import { SCALE, getCtx, CANVAS_SIZE, GRID_SIZE, GRID_NUMBER } from '@/store'
 
 export default {
-  name: 'game',
+  name: 'Game',
 
   data () {
     return {
