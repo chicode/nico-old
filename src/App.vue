@@ -18,7 +18,9 @@
       </div>
     </div>
     <!-- https://vuejs.org/v2/guide/components.html#Dynamic-Components -->
-    <component :is="$store.state.view"/>
+    <keep-alive>
+      <component :is="$store.state.view"/>
+    </keep-alive>
   </div>
 </template>
 
