@@ -33,6 +33,11 @@ function initCanvas (canvas) {
   canvas.height = CANVAS_SIZE * SCALE
 }
 
+function initCtx (ctx) {
+  ctx.imageSmoothingEnabled = false
+  ctx.scale(SCALE, SCALE)
+}
+
 export default {
   name: 'Sprite',
 
@@ -53,7 +58,15 @@ export default {
         width: 1,
         color: 'black',
       },
+      selectStart: [null, null],
+      selectSize: [null, null],
     }
+  },
+
+  computed: {
+    toolType () {
+      return ['pencil', 'eraser'].includes(this.tool) ? 'action' : 'select'
+    },
   },
 
   mounted () {
@@ -77,8 +90,7 @@ export default {
       initCanvas(el)
       this.main = el
       this.mainCtx = el.getContext('2d')
-      this.mainCtx.imageSmoothingEnabled = false
-      this.mainCtx.scale(SCALE, SCALE)
+      initCtx(this.mainCtx)
     },
 
     initGrid () {
@@ -115,24 +127,41 @@ export default {
     initOverlay () {
       const el = this.$refs.overlay
       initCanvas(el)
+      this.overlayCtx = el.getContext('2d')
+      initCtx(this.overlayCtx)
+      this.overlayCtx.setLineDash([1, 1])
+      this.overlayCtx.strokeStyle = 'blue'
+
+      el.addEventListener('mousedown', (event) => {
+        this.onChange(event, 'down')
+      })
+
       el.addEventListener('mousemove', (event) => {
-        if (this.mouseDown && !window.dragging) this.onChange(event)
+        if (this.mouseDown) { this.onChange(event, 'move') }
       })
     },
 
-    onChange (event) {
+    onChange (event, eventType) {
       let x = Math.floor((event.pageX - this.main.offsetLeft) / SCALE)
       let y = Math.floor((event.pageY - this.main.offsetTop) / SCALE)
 
-      let action = {
-        tool: this.tool,
-        x,
-        y,
-        ...this.toolOptions,
-      }
+      if (this.toolType === 'action') {
+        let action = {
+          tool: this.tool,
+          x,
+          y,
+          ...this.toolOptions,
+        }
 
-      this.$store.commit('changeSpritesheet', action)
-      handleSpritesheetAction(action, this.mainCtx)
+        this.$store.commit('changeSpritesheet', action)
+        handleSpritesheetAction(action, this.mainCtx)
+      } else {
+        if (eventType === 'down') {
+          this.selectStart = [x, y]
+        } else {
+          this.drawSelect(x, y)
+        }
+      }
     },
 
     updateCanvas () {
@@ -143,6 +172,27 @@ export default {
 
     switchTool (tool) {
       this.tool = tool
+    },
+
+    drawSelect (x, y) {
+      // clear the previous selection
+      let selectStart = this.selectStart.slice()
+      let selectSize = this.selectSize.slice()
+      for (let i of [0, 1]) {
+        if (selectSize[i] < 0) {
+          // if the selection is in the negative direction (up or left), reverse it
+          // and start deleting from its top left corner
+          // this is done because clearRect doesn't work with negative widths/heights
+          selectSize[i] *= -1
+          selectStart[i] -= selectSize[i]
+        }
+      }
+      // - 1, + 2 is to account for the border
+      this.overlayCtx.clearRect(selectStart[0] - 1, selectStart[1] - 1, selectSize[0] + 2, selectSize[1] + 2)
+
+      this.selectSize = [x - this.selectStart[0], y - this.selectStart[1]]
+
+      this.overlayCtx.strokeRect(this.selectStart[0], this.selectStart[1], this.selectSize[0], this.selectSize[1])
     },
   },
 }
