@@ -59,7 +59,7 @@ export default {
         color: 'black',
       },
       selectStart: [null, null],
-      selectSize: [null, null],
+      selectSize: [0, 0],
     }
   },
 
@@ -137,7 +137,7 @@ export default {
       })
 
       el.addEventListener('mousemove', (event) => {
-        if (this.mouseDown) { this.onChange(event, 'move') }
+        if (this.mouseDown) this.onChange(event, 'move')
       })
     },
 
@@ -158,6 +158,7 @@ export default {
       } else {
         if (eventType === 'down') {
           this.selectStart = [x, y]
+          this.selectSize = [0, 0]
         } else {
           this.drawSelect(x, y)
         }
@@ -188,11 +189,12 @@ export default {
         }
       }
       // - 1, + 2 is to account for the border
-      this.overlayCtx.clearRect(selectStart[0] - 1, selectStart[1] - 1, selectSize[0] + 2, selectSize[1] + 2)
+      // 0.5 is to offset the border so that it appears inline with the drawing
+      this.overlayCtx.clearRect(selectStart[0] - 1 + 0.5, selectStart[1] - 1 + 0.5, selectSize[0] + 2 - 0.5, selectSize[1] + 2 - 0.5)
 
       this.selectSize = [x - this.selectStart[0], y - this.selectStart[1]]
 
-      this.overlayCtx.strokeRect(this.selectStart[0], this.selectStart[1], this.selectSize[0], this.selectSize[1])
+      this.overlayCtx.strokeRect(this.selectStart[0] + 0.5, this.selectStart[1] + 0.5, this.selectSize[0], this.selectSize[1])
     },
   },
 }
