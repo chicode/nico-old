@@ -159,6 +159,7 @@ export default {
         if (eventType === 'down') {
           this.selectStart = [x, y]
           this.selectSize = [0, 0]
+          this.overlayCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
         } else {
           this.drawSelect(x, y)
         }
