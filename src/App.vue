@@ -12,7 +12,7 @@
       <div>
         <button @click="run">run code</button>
         <button
-          :disabled="view !== 'game'"
+          :disabled="$store.getters.pauseDisabled"
           @click="togglePause"
         >{{ paused ? 'resume' : 'pause' }}</button>
       </div>

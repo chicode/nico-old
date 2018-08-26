@@ -63,6 +63,7 @@ export default {
         eval(this.$store.state.compiledCode)
       } catch (e) {
         this.error = e.message
+        this.$store.state.running = false
       }
     },
   },

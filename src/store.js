@@ -82,6 +82,12 @@ export default new Vuex.Store({
     paused: false,
     running: false,
   },
+  getters: {
+    pauseDisabled (state) {
+      console.log(state)
+      return !state.running
+    },
+  },
   mutations: {
     changeView (state, { view }) {
       state.view = view
@@ -117,6 +123,9 @@ export default new Vuex.Store({
     },
     togglePause (state) {
       state.paused = !state.paused
+      if (!state.paused) {
+        state.view = 'game'
+      }
     },
   },
 })
