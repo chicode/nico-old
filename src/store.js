@@ -84,7 +84,6 @@ export default new Vuex.Store({
   },
   getters: {
     pauseDisabled (state) {
-      console.log(state)
       return !state.running
     },
   },
