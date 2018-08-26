@@ -74,11 +74,13 @@ export function handleSpritesheetAction (action, ctx) {
 
 export default new Vuex.Store({
   state: {
-    code: '',
+    code: window.localStorage.getItem('code') || '',
     compiledCode: '',
     error: '',
     view: 'sprite',
-    spritesheet: new Array(CANVAS_SIZE ** 2 * 4),
+    spritesheet: window.localStorage.getItem('spritesheet')
+      ? JSON.parse('[' + window.localStorage.getItem('spritesheet') + ']')
+      : new Array(CANVAS_SIZE ** 2 * 4),
     paused: false,
     running: false,
   },
@@ -94,6 +96,10 @@ export default new Vuex.Store({
         state.paused = true
       }
     },
+    changeCode (state, { code }) {
+      state.code = code
+      window.localStorage.setItem('code', state.code)
+    },
     changeSpritesheet (state, payload) {
       // generate a new ctx based on the current spritesheet, apply the action to it,
       // and then set it by extracting the imagedata from the updated ctx
@@ -101,6 +107,7 @@ export default new Vuex.Store({
       handleSpritesheetAction(payload, ctx)
 
       state.spritesheet = ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE).data
+      window.localStorage.setItem('spritesheet', state.spritesheet)
     },
     run (state) {
       state.view = 'game'

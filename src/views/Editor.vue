@@ -2,8 +2,9 @@
   <div class="root">
     <codemirror
       :options="cmOptions"
-      v-model="$store.state.code"
+      :value="$store.state.code"
       class="editor"
+      @input="code => $store.commit('changeCode', { code })"
     />
     <p v-if="$store.state.error">
       {{ $store.state.error }}
