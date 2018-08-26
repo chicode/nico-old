@@ -1,8 +1,20 @@
 <template>
   <div class="root">
-    <canvas ref="main" />
-    <canvas ref="grid" />
-    <canvas ref="overlay" />
+    <div>
+      <button
+        v-for="tool in tools"
+        :key="tool"
+        class="tool"
+        @click="switchTool(tool)"
+      >
+        <img :src="`tools/${tool}.svg`">
+      </button>
+    </div>
+    <div>
+      <canvas ref="main" />
+      <canvas ref="grid" />
+      <canvas ref="overlay" />
+    </div>
   </div>
 </template>
 
@@ -29,6 +41,14 @@ export default {
       mainCtx: null,
       mouseDown: false,
       tool: 'pencil',
+      tools: [
+        'pencil',
+        'eraser',
+        'rectangle-select',
+        'circle-select',
+        'similar-select',
+        'pencil-select',
+      ],
       toolOptions: {
         width: 1,
         color: 'black',
@@ -108,8 +128,7 @@ export default {
         tool: this.tool,
         x,
         y,
-        color: this.toolOptions.color,
-        width: this.toolOptions.width,
+        ...this.toolOptions,
       }
 
       this.$store.commit('changeSpritesheet', action)
@@ -120,6 +139,10 @@ export default {
       let { canvas } = getCtx(this.$store.state.spritesheet)
       this.mainCtx.clearRect(0, 0, CANVAS_SIZE * SCALE, CANVAS_SIZE * SCALE)
       this.mainCtx.drawImage(canvas, 0, 0)
+    },
+
+    switchTool (tool) {
+      this.tool = tool
     },
   },
 }
@@ -132,6 +155,12 @@ export default {
   }
   canvas:last-of-type {
     position: relative;
+  }
+}
+
+.tool {
+  img {
+    width: 30px;
   }
 }
 </style>
