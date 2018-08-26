@@ -168,7 +168,7 @@ export default {
 
     updateCanvas () {
       let { canvas } = getCtx(this.$store.state.spritesheet)
-      this.mainCtx.clearRect(0, 0, CANVAS_SIZE * SCALE, CANVAS_SIZE * SCALE)
+      this.mainCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
       this.mainCtx.drawImage(canvas, 0, 0)
     },
 
