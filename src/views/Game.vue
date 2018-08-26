@@ -22,7 +22,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['running', 'view']),
+    ...mapState(['running', 'paused', 'view']),
     mainCtx () {
       return this.$refs.mainCanvas.getContext('2d')
     },

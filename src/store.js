@@ -72,10 +72,6 @@ export function handleSpritesheetAction (action, ctx) {
   }
 }
 
-// window variables so that code in an eval statement can access them
-window.paused = false
-window.running = false
-
 export default new Vuex.Store({
   state: {
     code: '',
@@ -91,7 +87,6 @@ export default new Vuex.Store({
       state.view = view
       if (state.running) {
         state.paused = true
-        window.paused = true
       }
     },
     changeSpritesheet (state, payload) {
@@ -107,9 +102,7 @@ export default new Vuex.Store({
       state.compiledCode = prepareCode(state.code)
 
       state.running = false
-      window.running = false
       state.paused = false
-      window.paused = false
 
       // TODO: lint code and set error state variable
 
@@ -120,12 +113,10 @@ export default new Vuex.Store({
       // requestAnimationFrame, thereby terminating it
       setTimeout(() => {
         state.running = true
-        window.running = true
       })
     },
     togglePause (state) {
       state.paused = !state.paused
-      window.paused = !window.paused
     },
   },
 })

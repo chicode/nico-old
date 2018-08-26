@@ -31,12 +31,12 @@ function sprite (i, x, y) {
 
 if (typeof load === 'function') load()
 
-function main () {
-  if (!window.paused) {
+const main = () => {
+  if (!this.paused) {
     if (typeof update === 'function') update()
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
     draw()
   }
-  if (window.running) window.requestAnimationFrame(main)
+  if (this.running) window.requestAnimationFrame(main)
 }
 window.requestAnimationFrame(main)
