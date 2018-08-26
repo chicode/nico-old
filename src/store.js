@@ -72,6 +72,10 @@ export function handleSpritesheetAction (action, ctx) {
   }
 }
 
+// window variables so that code in an eval statement can access them
+window.paused = false
+window.running = false
+
 export default new Vuex.Store({
   state: {
     code: '',
@@ -79,10 +83,16 @@ export default new Vuex.Store({
     error: '',
     view: 'sprite',
     spritesheet: new Array(CANVAS_SIZE ** 2 * 4),
+    paused: false,
+    running: false,
   },
   mutations: {
     changeView (state, { view }) {
       state.view = view
+      if (state.running) {
+        state.paused = true
+        window.paused = true
+      }
     },
     changeSpritesheet (state, payload) {
       // generate a new ctx based on the current spritesheet, apply the action to it,
@@ -92,10 +102,30 @@ export default new Vuex.Store({
 
       state.spritesheet = ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE).data
     },
-    run (state, payload) {
+    run (state) {
       state.view = 'game'
       state.compiledCode = prepareCode(state.code)
+
+      state.running = false
+      window.running = false
+      state.paused = false
+      window.paused = false
+
       // TODO: lint code and set error state variable
+
+      // this hacky timeout serves two purposes:
+      // 1) to make sure that vue registers the change to the running
+      // state variable, even if it's going from true -> true
+      // 2) to give the currently running game one frame to not trigger the
+      // requestAnimationFrame, thereby terminating it
+      setTimeout(() => {
+        state.running = true
+        window.running = true
+      })
+    },
+    togglePause (state) {
+      state.paused = !state.paused
+      window.paused = !window.paused
     },
   },
 })

@@ -1,22 +1,29 @@
 <template>
   <div class="root">
-    <button @click="$store.commit('run')">run code</button>
-    <ul>
-      <li
-        v-for="view in views"
-        :key="view"
-        @click="changeView(view)"
-      >{{ view }}</li>
-    </ul>
-    {{ $store.state.view }}
+    <div class="header">
+      <div>
+        <button
+          v-for="view in views"
+          :key="view"
+          @click="changeView({ view })"
+        >{{ view }}</button>
+      </div>
+
+      <div>
+        <button @click="run">run code</button>
+        <button
+          :disabled="view !== 'game'"
+          @click="togglePause"
+        >{{ paused ? 'resume' : 'pause' }}</button>
+      </div>
+    </div>
     <!-- https://vuejs.org/v2/guide/components.html#Dynamic-Components -->
-    <keep-alive>
-      <component :is="$store.state.view"/>
-    </keep-alive>
+    <component :is="$store.state.view"/>
   </div>
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
 import * as viewComponents from '@/views'
 
 export default {
@@ -29,10 +36,11 @@ export default {
       views: Object.keys(viewComponents),
     }
   },
+  computed: {
+    ...mapState(['paused', 'view']),
+  },
   methods: {
-    changeView (view) {
-      this.$store.commit('changeView', { view })
-    },
+    ...mapMutations(['run', 'togglePause', 'changeView']),
   },
 }
 </script>

@@ -32,9 +32,11 @@ function sprite (i, x, y) {
 if (typeof load === 'function') load()
 
 function main () {
-  if (typeof update === 'function') update()
-  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-  draw()
-  if (!window.stop) window.requestAnimationFrame(main)
+  if (!window.paused) {
+    if (typeof update === 'function') update()
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+    draw()
+  }
+  if (window.running) window.requestAnimationFrame(main)
 }
 window.requestAnimationFrame(main)

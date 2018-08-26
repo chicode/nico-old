@@ -22,26 +22,29 @@ export default {
   },
 
   computed: {
-    ...mapState(['view']),
+    ...mapState(['running', 'view']),
     mainCtx () {
       return this.$refs.mainCanvas.getContext('2d')
     },
   },
 
   watch: {
-    view (newView, oldView) {
-      // switched away from game
-      if (oldView === 'game' && newView !== 'game') {
-        window.stopped = true
-      // switch to game
-      } else if (oldView !== 'game' && newView === 'game') {
-        this.init()
-      }
+    view (view) {
+      if (view === 'game' && this.running) this.init()
     },
+    running (running) {
+      if (running) this.init()
+    },
+  },
+
+  mounted () {
+    this.init()
   },
 
   methods: {
     init () {
+      this.error = ''
+
       /* eslint-disable no-unused-vars */
       const ctx = this.mainCtx
       const { canvas } = getCtx(this.$store.state.spritesheet)
@@ -55,7 +58,6 @@ export default {
       let CANVAS_SIZE_ = CANVAS_SIZE
       let SCALE_ = SCALE
 
-      window.stop = false
       try {
         // eslint-disable-next-line
         eval(this.$store.state.compiledCode)
