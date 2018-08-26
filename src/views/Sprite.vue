@@ -22,6 +22,7 @@
 import {
   handleSpritesheetAction,
   getCtx,
+  getCtxParamsForSelection,
   SCALE,
   CANVAS_SIZE,
   GRID_SIZE,
@@ -58,7 +59,7 @@ export default {
         width: 1,
         color: 'black',
       },
-      selectStart: [null, null],
+      selectStart: [0, 0],
       selectSize: [0, 0],
     }
   },
@@ -146,11 +147,27 @@ export default {
       let y = Math.floor((event.pageY - this.main.offsetTop) / SCALE)
 
       if (this.toolType === 'action') {
-        let action = {
-          tool: this.tool,
-          x,
-          y,
-          ...this.toolOptions,
+        let action
+        if (eventType === 'down' && this.selectionContains(x, y)) {
+          action = {
+            tool: this.tool,
+            type: 'selection',
+            selectStart: this.selectStart,
+            selectSize: this.selectSize,
+            color: this.toolOptions.color,
+          }
+        } else {
+          if (eventType === 'down') {
+            this.overlayCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+            this.selectSize = [0, 0]
+          }
+          action = {
+            tool: this.tool,
+            type: 'tool',
+            coords: [x, y],
+            color: this.toolOptions.color,
+            width: this.toolOptions.width,
+          }
         }
 
         this.$store.commit('changeSpritesheet', action)
@@ -178,24 +195,20 @@ export default {
 
     drawSelect (x, y) {
       // clear the previous selection
-      let selectStart = this.selectStart.slice()
-      let selectSize = this.selectSize.slice()
-      for (let i of [0, 1]) {
-        if (selectSize[i] < 0) {
-          // if the selection is in the negative direction (up or left), reverse it
-          // and start deleting from its top left corner
-          // this is done because clearRect doesn't work with negative widths/heights
-          selectSize[i] *= -1
-          selectStart[i] -= selectSize[i]
-        }
-      }
+      let params = getCtxParamsForSelection(this.selectStart, this.selectSize)
+
       // - 1, + 2 is to account for the border
       // 0.5 is to offset the border so that it appears inline with the drawing
-      this.overlayCtx.clearRect(selectStart[0] - 1 + 0.5, selectStart[1] - 1 + 0.5, selectSize[0] + 2 - 0.5, selectSize[1] + 2 - 0.5)
+      this.overlayCtx.clearRect(params[0] - 1 + 0.5, params[1] - 1 + 0.5, params[2] + 2 - 0.5, params[3] + 2 - 0.5)
 
       this.selectSize = [x - this.selectStart[0], y - this.selectStart[1]]
 
       this.overlayCtx.strokeRect(this.selectStart[0] + 0.5, this.selectStart[1] + 0.5, this.selectSize[0], this.selectSize[1])
+    },
+
+    selectionContains (x, y) {
+      let params = getCtxParamsForSelection(this.selectStart, this.selectSize)
+      return x >= params[0] && y >= params[1] && x < params[0] + params[2] && params[1] + params[3]
     },
   },
 }
