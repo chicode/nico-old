@@ -30,6 +30,8 @@ import {
   GRID_NUMBER,
 } from '@/store'
 
+const SELECTION_WIDTH = 2
+
 function initCanvas (canvas) {
   canvas.width = CANVAS_SIZE * SCALE
   canvas.height = CANVAS_SIZE * SCALE
@@ -130,8 +132,9 @@ export default {
       const el = this.$refs.overlay
       initCanvas(el)
       this.overlayCtx = el.getContext('2d')
-      this.overlayCtx.setLineDash([1, 1])
+      this.overlayCtx.setLineDash([5, 2])
       this.overlayCtx.strokeStyle = 'blue'
+      this.overlayCtx.lineWidth = SELECTION_WIDTH
 
       el.addEventListener('mousedown', (event) => {
         this.onChange(event, 'down')
