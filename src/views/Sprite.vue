@@ -24,6 +24,7 @@ import {
   getCtx,
   getCtxParamsForSelection,
   SCALE,
+  scale,
   CANVAS_SIZE,
   GRID_SIZE,
   GRID_NUMBER,
@@ -129,7 +130,6 @@ export default {
       const el = this.$refs.overlay
       initCanvas(el)
       this.overlayCtx = el.getContext('2d')
-      initCtx(this.overlayCtx)
       this.overlayCtx.setLineDash([1, 1])
       this.overlayCtx.strokeStyle = 'blue'
 
@@ -158,7 +158,7 @@ export default {
           }
         } else {
           if (eventType === 'down') {
-            this.overlayCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+            this.overlayCtx.clearRect(...scale(0, 0, CANVAS_SIZE, CANVAS_SIZE))
             this.selectSize = [0, 0]
           }
           action = {
@@ -176,7 +176,7 @@ export default {
         if (eventType === 'down') {
           this.selectStart = [x, y]
           this.selectSize = [0, 0]
-          this.overlayCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+          this.overlayCtx.clearRect(...scale(0, 0, CANVAS_SIZE, CANVAS_SIZE))
         } else {
           this.drawSelect(x, y)
         }
@@ -198,12 +198,11 @@ export default {
       let params = getCtxParamsForSelection(this.selectStart, this.selectSize)
 
       // - 1, + 2 is to account for the border
-      // 0.5 is to offset the border so that it appears inline with the drawing
-      this.overlayCtx.clearRect(params[0] - 1 + 0.5, params[1] - 1 + 0.5, params[2] + 2 - 0.5, params[3] + 2 - 0.5)
+      this.overlayCtx.clearRect(...scale(params[0] - 1, params[1] - 1, params[2] + 2, params[3] + 2))
 
       this.selectSize = [x - this.selectStart[0], y - this.selectStart[1]]
 
-      this.overlayCtx.strokeRect(this.selectStart[0] + 0.5, this.selectStart[1] + 0.5, this.selectSize[0], this.selectSize[1])
+      this.overlayCtx.strokeRect(...scale(this.selectStart[0], this.selectStart[1], this.selectSize[0], this.selectSize[1]))
     },
 
     selectionContains (x, y) {

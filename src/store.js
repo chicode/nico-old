@@ -38,6 +38,10 @@ export const COLORS = {
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
 
+export function scale (...values) {
+  return values.map((value) => value * SCALE)
+}
+
 // create a ctx based on some imagedata
 // uses a global ctx variable to prevent making a new canvas on every call
 export function getCtx (data) {
@@ -55,8 +59,8 @@ export function getCtxParamsForSelection (start, size) {
   return [
     start[0] + (size[0] < 0 ? size[0] : 0),
     start[1] + (size[1] < 0 ? size[1] : 0),
-    Math.abs(size[0]) + 1,
-    Math.abs(size[1]) + 1,
+    Math.abs(size[0]),
+    Math.abs(size[1]),
   ]
 }
 
