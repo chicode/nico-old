@@ -11,6 +11,17 @@
       </button>
     </div>
     <div>
+      <div v-if="tool === 'pencil'">
+        <div
+          v-for="color in colors"
+          :style="{ background: color }"
+          :key="color"
+          class="color"
+          @click="selectColor(color)"
+        />
+      </div>
+    </div>
+    <div>
       <canvas ref="main" />
       <canvas ref="grid" />
       <canvas ref="overlay" />
@@ -28,6 +39,7 @@ import {
   CANVAS_SIZE,
   GRID_SIZE,
   GRID_NUMBER,
+  COLORS,
 } from '@/store'
 
 const SELECTION_WIDTH = 2
@@ -64,6 +76,7 @@ export default {
       },
       selectStart: [0, 0],
       selectSize: [0, 0],
+      colors: COLORS,
     }
   },
 
@@ -106,7 +119,7 @@ export default {
       ctx.strokeStyle = '#7396af'
       ctx.fillStyle = '#7396af'
       ctx.font = 'bold 10px Source Code Pro'
-      ctx.lineWidth = 5
+      ctx.lineWidth = 2
       let begin, end
       for (let x = 0; x <= GRID_NUMBER; x++) {
         begin = [x * GRID_SIZE * SCALE, 0]
@@ -143,6 +156,10 @@ export default {
       el.addEventListener('mousemove', (event) => {
         if (this.mouseDown) this.onChange(event, 'move')
       })
+    },
+
+    selectColor (color) {
+      this.toolOptions.color = color
     },
 
     onChange (event, eventType) {
@@ -230,5 +247,11 @@ export default {
   img {
     width: 30px;
   }
+}
+
+.color {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
 }
 </style>
