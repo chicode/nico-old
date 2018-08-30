@@ -10,7 +10,10 @@ export default {
   name: 'OverlayCanvas',
 
   computed: {
-    ...mapState('sprite', ['selectStart', 'selectSize']),
+    ...mapState({
+      selectStart: state => state.sprite.selection.selectStart,
+      selectSize: state => state.sprite.selection.selectSize,
+    }),
   },
 
   watch: {

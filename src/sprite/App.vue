@@ -17,6 +17,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import { SCALE } from './constants'
+
 import ColorPicker from './components/ColorPicker'
 import Toolbar from './components/Toolbar'
 import GridCanvas from './components/GridCanvas'
@@ -49,7 +51,7 @@ export default {
       return [
         event.offsetX,
         event.offsetY,
-      ]
+      ].map(coord => Math.floor(coord / SCALE))
     },
   },
 }

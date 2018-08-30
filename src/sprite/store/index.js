@@ -1,14 +1,12 @@
-import {
-  handleSpritesheetAction,
-  getCtx,
-  getCtxParamsForSelection,
-  scaleCanvas,
-  scale,
-} from './helpers'
-import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE, SCALE } from './constants'
+import { getCtx, scaleCanvas, scale, getImageData } from '../helpers'
+import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
+
+import selection from './selection'
 
 export default {
   namespaced: true,
+
+  modules: { selection },
 
   state: {
     spritesheet: window.localStorage.getItem('spritesheet')
@@ -19,8 +17,6 @@ export default {
       width: 1,
       color: 'black',
     },
-    selectStart: [0, 0],
-    selectSize: [0, 0],
     mouseDown: false,
   },
 
@@ -39,74 +35,51 @@ export default {
     toolType: (state) => {
       return ['pencil', 'eraser'].includes(state.tool) ? 'action' : 'select'
     },
-    selectionContains: (state) => ([x, y]) => {
-      let params = getCtxParamsForSelection(state.selectStart, state.selectSize)
-      return x >= params[0] && y >= params[1] && x < params[0] + params[2] && params[1] + params[3]
-    },
   },
 
   mutations: {
-    changeSpritesheet (state, payload) {
-      // generate a new ctx based on the current spritesheet, apply the action to it,
-      // and then set it by extracting the imagedata from the updated ctx
-      const { ctx } = getCtx(state.spritesheet)
-      handleSpritesheetAction(payload, ctx)
-
-      state.spritesheet = ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE).data
+    changeSpritesheet (state, data) {
+      state.spritesheet = data
       window.localStorage.setItem('spritesheet', state.spritesheet)
     },
+
     selectColor (state, color) {
       state.toolOptions.color = color
     },
     switchTool (state, tool) {
       state.tool = tool
     },
+
     changeMouse (state, down) {
       state.mouseDown = down
-    },
-    setSelectSize (state, size) {
-      state.selectSize = size
-    },
-    setSelectStart (state, coords) {
-      state.selectStart = coords
     },
   },
 
   actions: {
     change ({ state, getters, commit, dispatch }, { eventType, coords }) {
-      coords = coords.map((coord) => Math.floor(coord / SCALE))
-
       if (getters.toolType === 'action') {
         let action
         if (eventType === 'down' && getters.selectionContains(coords)) {
           action = {
-            tool: state.tool,
             type: 'selection',
-            selectStart: state.selectStart,
-            selectSize: state.selectSize,
-            color: state.toolOptions.color,
           }
         } else {
           if (eventType === 'down') {
-            dispatch('resetSelect')
+            commit('resetSelect')
           }
           action = {
-            tool: state.tool,
             type: 'tool',
             coords,
-            color: state.toolOptions.color,
-            width: state.toolOptions.width,
           }
         }
-
-        commit('changeSpritesheet', action)
+        dispatch('handleAction', action)
       } else {
         if (eventType === 'down') {
-          dispatch('startSelect', coords)
+          commit('startSelect', coords)
         } else {
           commit('setSelectSize', [
-            coords[0] - state.selectStart[0],
-            coords[1] - state.selectStart[1],
+            coords[0] - state.selection.selectStart[0],
+            coords[1] - state.selection.selectStart[1],
           ])
         }
       }
@@ -121,12 +94,30 @@ export default {
     mouseMove ({ state, dispatch }, coords) {
       if (state.mouseDown) dispatch('change', { eventType: 'move', coords })
     },
-    resetSelect ({ commit }) {
-      commit('setSelectSize', [0, 0])
-    },
-    startSelect ({ dispatch, commit }, start) {
-      dispatch('resetSelect')
-      commit('setSelectStart', start)
+
+    handleAction ({ state, commit, getters }, payload) {
+      let params
+      if (payload.type === 'selection') {
+        params = getters.accountForNegativeSize
+      } else {
+        params = [
+          payload.coords[0] - Math.floor(state.toolOptions.width / 2),
+          payload.coords[1] - Math.floor(state.toolOptions.width / 2),
+          state.toolOptions.width,
+          state.toolOptions.width,
+        ]
+      }
+
+      const { ctx } = getCtx(state.spritesheet)
+
+      if (state.tool === 'pencil') {
+        ctx.fillStyle = state.toolOptions.color
+        ctx.fillRect(...params)
+      } else if (state.tool === 'eraser') {
+        ctx.clearRect(...params)
+      }
+
+      commit('changeSpritesheet', getImageData(ctx))
     },
   },
 }
