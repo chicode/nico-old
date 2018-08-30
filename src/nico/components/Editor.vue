@@ -2,17 +2,15 @@
   <div class="root">
     <codemirror
       :options="cmOptions"
-      :value="$store.state.code"
+      :value="code"
       class="editor"
-      @input="code => $store.commit('changeCode', { code })"
+      @input="changeCode"
     />
-    <p v-if="$store.state.error">
-      {{ $store.state.error }}
-    </p>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import { codemirror } from 'vue-codemirror'
 
 import 'codemirror/mode/javascript/javascript.js'
@@ -20,7 +18,9 @@ import 'codemirror/lib/codemirror.css'
 
 export default {
   name: 'Editor',
+
   components: { codemirror },
+
   data () {
     return {
       cmOptions: {
@@ -29,6 +29,14 @@ export default {
         lineNumbers: true,
       },
     }
+  },
+
+  computed: {
+    ...mapState('nico', ['code']),
+  },
+
+  methods: {
+    ...mapMutations('nico', ['changeCode']),
   },
 }
 </script>
