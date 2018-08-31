@@ -4,7 +4,7 @@
       <button
         v-for="view in $options.VIEWS"
         :key="view"
-        @click="changeView(view)"
+        @click="setView"
       >{{ view }}</button>
     </div>
 
@@ -29,7 +29,7 @@ export default {
     ...mapState('nico', ['view', 'paused']),
   },
   methods: {
-    ...mapMutations('nico', ['togglePause', 'changeView']),
+    ...mapMutations('nico', ['togglePause', 'setView']),
     ...mapActions('nico', ['run']),
   },
 }

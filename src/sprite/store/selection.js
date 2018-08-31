@@ -18,8 +18,8 @@ export default {
   },
 
   mutations: {
-    setSelectSize (state, size) {
-      state.selectSize = size
+    resizeSelect (state, coords) {
+      state.selectSize = [coords[0] - state.selectStart[0], coords[1] - state.selectStart[1]]
     },
     resetSelect (state) {
       state.selectSize = [0, 0]

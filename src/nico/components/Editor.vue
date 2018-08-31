@@ -4,7 +4,7 @@
       :options="cmOptions"
       :value="code"
       class="editor"
-      @input="changeCode"
+      @input="setCode"
     />
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('nico', ['changeCode']),
+    ...mapMutations('nico', ['setCode']),
   },
 }
 </script>

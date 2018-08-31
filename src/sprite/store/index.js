@@ -38,19 +38,19 @@ export default {
   },
 
   mutations: {
-    changeSpritesheet (state, data) {
+    setSpritesheet (state, data) {
       state.spritesheet = data
       window.localStorage.setItem('spritesheet', state.spritesheet)
     },
 
-    selectColor (state, color) {
+    setColor (state, color) {
       state.toolOptions.color = color
     },
-    switchTool (state, tool) {
+    setTool (state, tool) {
       state.tool = tool
     },
 
-    changeMouse (state, down) {
+    setMouse (state, down) {
       state.mouseDown = down
     },
   },
@@ -77,22 +77,9 @@ export default {
         if (eventType === 'down') {
           commit('startSelect', coords)
         } else {
-          commit('setSelectSize', [
-            coords[0] - state.selection.selectStart[0],
-            coords[1] - state.selection.selectStart[1],
-          ])
+          commit('resizeSelect', coords)
         }
       }
-    },
-    mouseDown ({ dispatch, commit }, coords) {
-      commit('changeMouse', true)
-      dispatch('change', { eventType: 'down', coords })
-    },
-    mouseUp ({ commit }) {
-      commit('changeMouse', false)
-    },
-    mouseMove ({ state, dispatch }, coords) {
-      if (state.mouseDown) dispatch('change', { eventType: 'move', coords })
     },
 
     handleAction ({ state, commit, getters }, payload) {
@@ -117,7 +104,18 @@ export default {
         ctx.clearRect(...params)
       }
 
-      commit('changeSpritesheet', getImageData(ctx))
+      commit('setSpritesheet', getImageData(ctx))
+    },
+
+    mouseDown ({ dispatch, commit }, coords) {
+      commit('setMouse', true)
+      dispatch('change', { eventType: 'down', coords })
+    },
+    mouseUp ({ commit }) {
+      commit('setMouse', false)
+    },
+    mouseMove ({ state, dispatch }, coords) {
+      if (state.mouseDown) dispatch('change', { eventType: 'move', coords })
     },
   },
 }

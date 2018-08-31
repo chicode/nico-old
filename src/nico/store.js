@@ -29,7 +29,7 @@ export default {
   },
 
   mutations: {
-    changeView (state, view) {
+    setView (state, view) {
       state.view = view
       if (state.running) {
         state.paused = true
@@ -41,7 +41,7 @@ export default {
         state.view = 'game'
       }
     },
-    changeCode (state, code) {
+    setCode (state, code) {
       state.code = code
       window.localStorage.setItem('code', state.code)
     },
@@ -61,7 +61,7 @@ export default {
 
   actions: {
     run ({ state, commit, rootGetters, rootState }) {
-      commit('changeView', 'game')
+      commit('setView', 'game')
       commit('setRunning', false)
 
       // TODO: lint code and set error state variable

@@ -4,7 +4,7 @@
       v-for="tool in TOOLS"
       :key="tool"
       class="tool"
-      @click="switchTool(tool)"
+      @click="setTool(tool)"
     >
       <img :src="`tools/${tool}.svg`">
     </button>
@@ -29,7 +29,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('sprite', ['switchTool']),
+    ...mapMutations('sprite', ['setTool']),
   },
 }
 </script>

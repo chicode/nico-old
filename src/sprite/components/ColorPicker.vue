@@ -5,7 +5,7 @@
       :style="{ background: color }"
       :key="color"
       class="color"
-      @click="selectColor(color)"
+      @click="setColor(color)"
     />
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('sprite', ['selectColor']),
+    ...mapMutations('sprite', ['setColor']),
   },
 }
 </script>
