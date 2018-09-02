@@ -5,7 +5,6 @@
 <script>
 import { mapState } from 'vuex'
 import { initCanvas, initCtx, clearCtx, getCanvasFromData } from '../helpers'
-import { CANVAS_SIZE } from '../constants'
 
 export default {
   name: 'MainCanvas',
