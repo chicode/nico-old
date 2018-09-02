@@ -36,8 +36,9 @@ export default {
     const el = this.$refs.canvas.$el
     const f = this.getCoordsFromEvent
     el.addEventListener('mousedown', (event) => this.mouseDown(f(event)))
-    el.addEventListener('mouseup', (event) => this.mouseUp(f(event)))
     el.addEventListener('mousemove', (event) => this.mouseMove(f(event)))
+    el.addEventListener('mouseup', this.mouseUp)
+    el.addEventListener('mouseleave', this.mouseLeave)
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Control') window.control = true
@@ -52,7 +53,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('sprite', ['mouseDown', 'mouseUp', 'mouseMove']),
+    ...mapActions('sprite', ['mouseDown', 'mouseUp', 'mouseMove', 'mouseLeave']),
     ...mapActions('history', ['undo', 'redo']),
 
     getCoordsFromEvent (event) {

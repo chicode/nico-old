@@ -125,7 +125,10 @@ export default {
         window.lastCoords = coords
       }
     },
-    mouseUp ({ commit }) {
+    mouseUp () {
+      window.mouseDown = false
+    },
+    mouseLeave () {
       window.mouseDown = false
     },
     mouseMove ({ state, dispatch }, coords) {
