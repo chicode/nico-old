@@ -8,11 +8,21 @@
     >
       <img :src="`tools/${tool}.svg`">
     </button>
+    <button
+      @click="undo"
+    >
+      <img src="undo.svg">
+    </button>
+    <button
+      @click="redo"
+    >
+      <img src="redo.svg">
+    </button>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 import { TOOLS } from '../constants'
 
 export default {
@@ -30,14 +40,14 @@ export default {
 
   methods: {
     ...mapMutations('sprite', ['setTool']),
+    ...mapActions('history', ['undo', 'redo']),
+    ...mapActions('sprite', ['clear']),
   },
 }
 </script>
 
 <style scoped lang="stylus">
-.tool {
-  img {
-    width: 30px;
-  }
+img {
+  width: 30px;
 }
 </style>
