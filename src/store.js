@@ -13,5 +13,11 @@ export default new Vuex.Store({
     nico,
     sprite,
   },
-  plugins: [historyPlugin('sprite')],
+  plugins: [
+    historyPlugin('sprite', [], (store) => {
+      // hacky fix to save spritesheet without mutation
+      window.localStorage.setItem('spritesheet', store.state.sprite.spritesheet)
+      window.lastCoords = [null, null]
+    }),
+  ],
 })

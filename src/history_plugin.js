@@ -1,15 +1,6 @@
 import cloneDeep from 'lodash.clonedeep'
 
-function revert (store, history, index, module) {
-  // this is super hacky, but the reason that object destructuring is used here is because
-  // replaceState affects all modules, and this code needs to revert only the module of the history that this plugin controls
-  store.replaceState({ ...store.state, [module]: cloneDeep(history[index]) })
-  // hacky fix to save spritesheet without mutation
-  window.localStorage.setItem('spritesheet', store.state[module].spritesheet)
-  window.lastCoords = [null, null]
-}
-
-export default (module) => (store) => {
+export default (module, excludedMutations = [], afterRevert = () => {}) => (store) => {
   let history = []
 
   history.push(cloneDeep(store.state[module]))
@@ -17,7 +8,7 @@ export default (module) => (store) => {
 
   store.subscribe(({ type, payload }, state) => {
     // mutation is of the right module
-    if (type.split('/')[0] === module) {
+    if (type.split('/')[0] === module && !excludedMutations.includes(type.split('/')[1])) {
       // some redoing/undoing has occured
       if (index < history.length - 1) {
         history.splice(index + 1)
@@ -27,6 +18,14 @@ export default (module) => (store) => {
       index++
     }
   })
+
+  function revert () {
+    // this is super hacky, but the reason that object destructuring is used here is because
+    // replaceState affects all modules, and this code needs to revert only the module of the history that this plugin controls
+    store.replaceState({ ...store.state, [module]: cloneDeep(history[index]) })
+
+    afterRevert(store)
+  }
 
   store.registerModule('history', {
     namespaced: true,
