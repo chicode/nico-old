@@ -58,7 +58,7 @@ export default function bucketFill (data, initialCoords, color) {
   color = hexToRgb(color)
   if (!color) throw new Error('Bucket fill color must be in hex')
 
-  const allCoords = search(data, initialCoords, getColor(data, initialCoords), [])
+  const allCoords = search(data, initialCoords, getColor(data, initialCoords), [initialCoords])
   for (let coords of allCoords) {
     setPixel(data, coords, color)
   }
