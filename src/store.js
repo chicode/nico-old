@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 import nico from './nico/store'
 import sprite from './sprite/store'
 
+import historyPlugin from './history_plugin'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,4 +13,5 @@ export default new Vuex.Store({
     nico,
     sprite,
   },
+  plugins: [historyPlugin('sprite')],
 })

@@ -17,7 +17,6 @@ export default {
       width: 1,
       color: 'black',
     },
-    mouseDown: false,
   },
 
   getters: {
@@ -49,10 +48,6 @@ export default {
     setTool (state, tool) {
       state.tool = tool
     },
-
-    setMouse (state, down) {
-      state.mouseDown = down
-    },
   },
 
   actions: {
@@ -65,7 +60,7 @@ export default {
           }
         } else {
           if (eventType === 'down') {
-            commit('resetSelect')
+            if (getters.selectionExists) commit('resetSelect')
           }
           action = {
             type: 'tool',
@@ -108,14 +103,14 @@ export default {
     },
 
     mouseDown ({ dispatch, commit }, coords) {
-      commit('setMouse', true)
+      window.mouseDown = true
       dispatch('change', { eventType: 'down', coords })
     },
     mouseUp ({ commit }) {
-      commit('setMouse', false)
+      window.mouseDown = false
     },
     mouseMove ({ state, dispatch }, coords) {
-      if (state.mouseDown) dispatch('change', { eventType: 'move', coords })
+      if (window.mouseDown) dispatch('change', { eventType: 'move', coords })
     },
   },
 }

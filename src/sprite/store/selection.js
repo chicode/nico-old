@@ -15,6 +15,9 @@ export default {
       let params = getters.accountForNegativeSize
       return x >= params[0] && y >= params[1] && x < params[0] + params[2] && params[1] + params[3]
     },
+    selectionExists: (state) => {
+      return state.selectSize[0] !== 0 || state.selectSize[1] !== 0
+    },
   },
 
   mutations: {

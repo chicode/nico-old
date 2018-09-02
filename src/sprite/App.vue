@@ -1,5 +1,7 @@
 <template>
-  <div class="root">
+  <div
+    class="root"
+  >
     <Toolbar />
     <div>
       <div v-if="tool === 'pencil'">
@@ -42,10 +44,22 @@ export default {
     el.addEventListener('mousedown', (event) => this.mouseDown(f(event)))
     el.addEventListener('mouseup', (event) => this.mouseUp(f(event)))
     el.addEventListener('mousemove', (event) => this.mouseMove(f(event)))
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Control') window.control = true
+
+      else if (event.key === 'Z' && window.control) this.redo()
+      else if (event.key === 'z' && window.control) this.undo()
+    })
+
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'Control') window.control = false
+    })
   },
 
   methods: {
     ...mapActions('sprite', ['mouseDown', 'mouseUp', 'mouseMove']),
+    ...mapActions('history', ['undo', 'redo']),
 
     getCoordsFromEvent (event) {
       return [
