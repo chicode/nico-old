@@ -38,7 +38,8 @@ export default {
     togglePause (state) {
       state.paused = !state.paused
       if (!state.paused) {
-        state.view = 'game' }
+        state.view = 'game'
+      }
     },
     setCode (state, code) {
       state.code = code

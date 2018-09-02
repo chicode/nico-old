@@ -74,6 +74,7 @@ export default {
   canvas:last-of-type {
     position: relative;
   }
+
 }
 .controls {
   display: flex;
@@ -83,4 +84,5 @@ export default {
   }
   margin: 10px 0;
 }
+
 </style>

@@ -120,7 +120,7 @@ export default {
           if (payload.type === 'clear') {
             ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
           } else {
-            if (getters.isTool(['pencil'])) {
+            if (getters.isTool(['pencil', 'bucket'])) {
               ctx.fillStyle = state.color
               ctx.fillRect(...params)
             } else if (getters.isTool(['eraser'])) {

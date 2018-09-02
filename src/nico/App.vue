@@ -27,3 +27,21 @@ export default {
   },
 }
 </script>
+
+<styles lang="stylus">
+button *,
+img,
+.no-interaction {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+</styles>

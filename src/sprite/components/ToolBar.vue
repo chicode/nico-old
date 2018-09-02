@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="tools">
+    <!-- see nico/App.vue for definition of no-interaction -->
+    <div class="tools no-interaction">
       <button
         v-for="tool in $options.TOOLS"
         :key="tool"

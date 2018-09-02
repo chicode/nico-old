@@ -15,7 +15,6 @@ function isPixel (data, coords) {
 
 function setPixel (data, coords, color) {
   const i = getIndexFromCoords(coords)
-  console.log('final', i)
   const [red, green, blue] = color
   data[i] = red
   data[i + 1] = green
@@ -36,15 +35,6 @@ function hexToRgb (hex) {
 function search (data, coords, color, traversed) {
   for (const direction of [[0, -1], [0, 1], [-1, 0], [1, 0]]) {
     let newCoords = [coords[0] + direction[0], coords[1] + direction[1]]
-    console.log(
-      newCoords,
-      getColor(data, newCoords),
-      color,
-      traversed.reduce(
-        (acc, val) => acc && !(val[0] === newCoords[0] && val[1] === newCoords[1]),
-        true,
-      ),
-    )
     if (
       // new coordinate is of the right color and has not already been added
       getColor(data, newCoords) === color &&
@@ -55,7 +45,6 @@ function search (data, coords, color, traversed) {
       )
     ) {
       traversed.push(newCoords)
-      console.log(traversed)
       search(data, newCoords, color, traversed)
     }
   }
