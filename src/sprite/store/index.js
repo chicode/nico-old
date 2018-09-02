@@ -1,10 +1,21 @@
 import { getCanvasFromData, scaleCanvas, scale, transformData } from '../helpers'
 import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
+import bucketFill from '../bucket_fill'
 
 import selection from './selection'
 
 window.mouseDown = false
 window.lastCoords = [null, null]
+
+function getStoredSpritesheet () {
+  const spritesheet = window.localStorage.getItem('spritesheet')
+  if (spritesheet) {
+    try {
+      return JSON.parse('[' + window.localStorage.getItem('spritesheet') + ']')
+    } catch (e) {}
+  }
+  return new Array(CANVAS_SIZE ** 2 * 4)
+}
 
 export default {
   namespaced: true,
@@ -12,12 +23,10 @@ export default {
   modules: { selection },
 
   state: {
-    spritesheet: window.localStorage.getItem('spritesheet')
-      ? JSON.parse('[' + window.localStorage.getItem('spritesheet') + ']')
-      : new Array(CANVAS_SIZE ** 2 * 4),
+    spritesheet: getStoredSpritesheet(),
     tool: 'pencil',
     width: 1,
-    color: 'black',
+    color: '#000000',
   },
 
   getters: {
@@ -89,30 +98,37 @@ export default {
     },
 
     handleAction ({ state, commit, getters }, payload) {
-      let params
-      if (payload.type === 'selection') {
-        params = getters.accountForNegativeSize
-      } else if (payload.type === 'tool') {
-        params = [
-          payload.coords[0] - Math.floor(state.width / 2),
-          payload.coords[1] - Math.floor(state.width / 2),
-          state.width,
-          state.width,
-        ]
-      }
+      let imageData
 
-      let imageData = transformData(state.spritesheet, (ctx) => {
-        if (payload.type === 'clear') {
-          ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
-        } else {
-          if (getters.isTool(['pencil', 'bucket'])) {
-            ctx.fillStyle = state.color
-            ctx.fillRect(...params)
-          } else if (getters.isTool(['eraser'])) {
-            ctx.clearRect(...params)
-          }
+      if (payload.type === 'tool' && state.tool === 'bucket') {
+        imageData = bucketFill(state.spritesheet, payload.coords, state.color)
+      } else {
+        let params
+
+        if (payload.type === 'selection') {
+          params = getters.accountForNegativeSize
+        } else if (payload.type === 'tool') {
+          params = [
+            payload.coords[0] - Math.floor(state.width / 2),
+            payload.coords[1] - Math.floor(state.width / 2),
+            state.width,
+            state.width,
+          ]
         }
-      })
+
+        imageData = transformData(state.spritesheet, (ctx) => {
+          if (payload.type === 'clear') {
+            ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+          } else {
+            if (getters.isTool(['pencil'])) {
+              ctx.fillStyle = state.color
+              ctx.fillRect(...params)
+            } else if (getters.isTool(['eraser'])) {
+              ctx.clearRect(...params)
+            }
+          }
+        })
+      }
 
       commit('setSpritesheet', imageData)
     },

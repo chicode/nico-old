@@ -67,3 +67,4 @@ export function lowerBoundary (coords) {
 export function upperBoundary (coords) {
   return coords.map((i) => (i > CANVAS_SIZE ? CANVAS_SIZE : i))
 }
+
