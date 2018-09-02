@@ -4,7 +4,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { initCanvas, initCtx, clearCtx, getCtx } from '../helpers'
+import { initCanvas, initCtx, clearCtx, getCanvasFromData } from '../helpers'
 import { CANVAS_SIZE } from '../constants'
 
 export default {
@@ -32,7 +32,7 @@ export default {
 
   methods: {
     updateCanvas () {
-      let { canvas } = getCtx(this.spritesheet)
+      let canvas = getCanvasFromData(this.spritesheet)
       clearCtx(this.mainCtx)
       this.mainCtx.drawImage(canvas, 0, 0)
     },

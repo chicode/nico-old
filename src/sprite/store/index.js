@@ -1,4 +1,4 @@
-import { getCtx, scaleCanvas, scale, getImageData } from '../helpers'
+import { getCanvasFromData, scaleCanvas, scale, getDataFromCtxOperations } from '../helpers'
 import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
 
 import selection from './selection'
@@ -24,7 +24,7 @@ export default {
 
   getters: {
     sprites: (state) => {
-      const { canvas } = getCtx(state.spritesheet)
+      const canvas = getCanvasFromData(state.spritesheet)
       const ctx = scaleCanvas(canvas)
       let sprites = []
       for (let x = 0; x < GRID_NUMBER; x++) {
@@ -87,7 +87,7 @@ export default {
       let params
       if (payload.type === 'selection') {
         params = getters.accountForNegativeSize
-      } else {
+      } else if (payload.type === 'tool') {
         params = [
           payload.coords[0] - Math.floor(state.toolOptions.width / 2),
           payload.coords[1] - Math.floor(state.toolOptions.width / 2),
@@ -96,16 +96,24 @@ export default {
         ]
       }
 
-      const { ctx } = getCtx(state.spritesheet)
+      let imageData = getDataFromCtxOperations((ctx) => {
+        if (payload.type === 'clear') {
+          ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+        } else {
+          if (state.tool === 'pencil') {
+            ctx.fillStyle = state.toolOptions.color
+            ctx.fillRect(...params)
+          } else if (state.tool === 'eraser') {
+            ctx.clearRect(...params)
+          }
+        }
+      })
 
-      if (state.tool === 'pencil') {
-        ctx.fillStyle = state.toolOptions.color
-        ctx.fillRect(...params)
-      } else if (state.tool === 'eraser') {
-        ctx.clearRect(...params)
-      }
+      commit('setSpritesheet', imageData)
+    },
 
-      commit('setSpritesheet', getImageData(ctx))
+    clear ({ dispatch }) {
+      dispatch('handleAction', { type: 'clear' })
     },
 
     mouseDown ({ dispatch, commit }, coords) {

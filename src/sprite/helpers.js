@@ -9,11 +9,16 @@ export function scale (...values) {
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
 
-export function getCtx (data) {
+export function getCanvasFromData (data) {
   let imageData = ctx.createImageData(CANVAS_SIZE, CANVAS_SIZE)
   imageData.data.set(data)
   ctx.putImageData(imageData, 0, 0)
-  return { canvas, ctx }
+  return canvas
+}
+
+export function getDataFromCtxOperations (func) {
+  func(ctx)
+  return getDataFromCtx(ctx)
 }
 
 const scaledCanvas = document.createElement('canvas')
@@ -40,6 +45,6 @@ export function clearCtx (ctx) {
   ctx.clearRect(0, 0, CANVAS_SIZE * SCALE, CANVAS_SIZE * SCALE)
 }
 
-export function getImageData (ctx) {
+export function getDataFromCtx (ctx) {
   return ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE).data
 }

@@ -9,6 +9,11 @@
       <img :src="`tools/${tool}.svg`">
     </button>
     <button
+      @click="clear"
+    >
+      <img src="clear.svg">
+    </button>
+    <button
       @click="undo"
     >
       <img src="undo.svg">
