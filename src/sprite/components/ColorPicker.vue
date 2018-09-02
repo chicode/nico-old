@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-for="color in COLORS"
+      v-for="color in $options.COLORS"
       :style="{ background: color }"
       :key="color"
       class="color"
@@ -17,11 +17,7 @@ import { COLORS } from '../constants'
 export default {
   name: 'ColorPicker',
 
-  data: function () {
-    return {
-      COLORS,
-    }
-  },
+  COLORS,
 
   computed: {
     ...mapState('sprite', ['toolOptions']),
