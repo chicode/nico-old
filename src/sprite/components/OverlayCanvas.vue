@@ -1,10 +1,11 @@
 <template>
   <canvas ref="overlay" />
 </template>
+
 <script>
 import { mapMutations, mapState } from 'vuex'
 import { initCanvas, clearCtx, scale } from '../helpers'
-import { SELECTION_WIDTH, SELECTION_COLOR, SELECTION_DASH } from '../constants'
+import { SELECTION_WIDTH, SELECTION_COLOR, SELECTION_DASH, CANVAS_PADDING } from '../constants'
 
 export default {
   name: 'OverlayCanvas',
@@ -27,8 +28,10 @@ export default {
 
   mounted () {
     const el = this.$refs.overlay
-    initCanvas(el)
+    initCanvas(el, CANVAS_PADDING)
     this.overlayCtx = el.getContext('2d')
+    // account for canvas being too large due to canvas padding
+    this.overlayCtx.translate(CANVAS_PADDING, CANVAS_PADDING)
     this.overlayCtx.setLineDash(SELECTION_DASH)
     this.overlayCtx.strokeStyle = SELECTION_COLOR
     this.overlayCtx.lineWidth = SELECTION_WIDTH

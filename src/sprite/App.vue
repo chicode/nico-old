@@ -7,9 +7,9 @@
       <OptionBar />
     </div>
     <div>
-      <GridCanvas/>
+      <GridCanvas />
       <MainCanvas />
-      <OverlayCanvas ref="canvas"/>
+      <OverlayCanvas ref="canvas" />
     </div>
   </div>
 </template>
@@ -69,7 +69,6 @@ export default {
 .root {
   canvas {
     position: absolute;
-    padding: 5px;
   }
   canvas:last-of-type {
     position: relative;

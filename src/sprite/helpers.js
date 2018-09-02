@@ -1,4 +1,4 @@
-import { SCALE, CANVAS_SIZE } from './constants'
+import { SCALE, CANVAS_SIZE, CANVAS_PADDING } from './constants'
 
 export function scale (...values) {
   return values.map((value) => value * SCALE)
@@ -31,9 +31,9 @@ export function scaleCanvas (canvas) {
   return scaledCtx
 }
 
-export function initCanvas (canvas) {
-  canvas.width = CANVAS_SIZE * SCALE
-  canvas.height = CANVAS_SIZE * SCALE
+export function initCanvas (canvas, padding = 0) {
+  canvas.width = CANVAS_SIZE * SCALE + padding * 2
+  canvas.height = CANVAS_SIZE * SCALE + padding * 2
 }
 
 export function initCtx (ctx) {
@@ -42,7 +42,14 @@ export function initCtx (ctx) {
 }
 
 export function clearCtx (ctx) {
-  ctx.clearRect(0, 0, CANVAS_SIZE * SCALE, CANVAS_SIZE * SCALE)
+  // add canvas padding just in case
+  // if the size goes over the size of the canvas ctx doesn't complain
+  ctx.clearRect(
+    -CANVAS_PADDING,
+    -CANVAS_PADDING,
+    CANVAS_SIZE * SCALE + CANVAS_PADDING * 2,
+    CANVAS_SIZE * SCALE + CANVAS_PADDING * 2,
+  )
 }
 
 export function getDataFromCtx (ctx) {

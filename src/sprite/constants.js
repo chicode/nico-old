@@ -1,7 +1,12 @@
 export const GRID_SIZE = 8
+export const GRID_WIDTH = 2
+export const GRID_COLOR = '#7396af'
+export const GRID_FONT = 'bold 10px Source Code Pro'
 export const GRID_NUMBER = 10
+
 export const CANVAS_SIZE = GRID_SIZE * GRID_NUMBER
 export const SCALE = 10
+
 export const COLORS = {
   night: '#000000',
   crown: '#572956',
@@ -35,3 +40,8 @@ export const SELECTION_DASH = [5, 2]
 
 export const MIN_TOOL_WIDTH = 1
 export const MAX_TOOL_WIDTH = 10
+
+// helps get rid of stylistic elements being cut off at the edge of the canvas
+// set to the max because both the grid and selection are at risk here, and accounting for the
+// widest one prevents both from being cut off
+export const CANVAS_PADDING = Math.max(SELECTION_WIDTH, GRID_WIDTH)

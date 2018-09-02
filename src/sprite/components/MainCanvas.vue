@@ -1,13 +1,19 @@
 <template>
-  <canvas ref="main" />
+  <canvas
+    ref="main"
+    :style="{ padding: $options.CANVAS_PADDING + 'px' }"
+  />
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { initCanvas, initCtx, clearCtx, getCanvasFromData } from '../helpers'
+import { CANVAS_PADDING } from '../constants'
 
 export default {
   name: 'MainCanvas',
+
+  CANVAS_PADDING,
 
   computed: {
     ...mapState('sprite', ['spritesheet']),
