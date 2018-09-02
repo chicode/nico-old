@@ -7,6 +7,12 @@
     <SizeSlider />
   </div>
   <div
+    v-else-if="tool === 'bucket'"
+    class="option-bar"
+  >
+    <ColorPicker />
+  </div>
+  <div
     v-else-if="tool === 'eraser'"
     class="option-bar"
   >

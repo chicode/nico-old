@@ -25,14 +25,7 @@ export const COLORS = {
   metal: '#557185',
   coal: '#324056',
 }
-export const TOOLS = [
-  'pencil',
-  'eraser',
-  'rectangle-select',
-  'circle-select',
-  'similar-select',
-  'pencil-select',
-]
+export const TOOLS = ['pencil', 'eraser', 'bucket', 'rectangle-select', 'circle-select']
 
 export const SELECTION_WIDTH = 2
 export const SELECTION_COLOR = 'blue'

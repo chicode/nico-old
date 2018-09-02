@@ -32,8 +32,9 @@ export default {
       }
       return sprites
     },
-    toolType: (state) => {
-      return ['pencil', 'eraser'].includes(state.tool) ? 'action' : 'select'
+
+    isTool: (state) => (options) => {
+      return options.includes(state.tool)
     },
   },
 
@@ -60,23 +61,25 @@ export default {
 
   actions: {
     change ({ state, getters, commit, dispatch }, { eventType, coords }) {
-      if (getters.toolType === 'action') {
+      if (getters.isTool(['pencil', 'eraser', 'bucket'])) {
         let action
-        if (eventType === 'down' && getters.selectionContains(coords)) {
-          action = {
-            type: 'selection',
+        if (getters.selectionExists) {
+          if (getters.selectionContains(coords) && getters.isTool(['bucket'])) {
+            action = {
+              type: 'selection',
+            }
+          } else {
+            commit('resetSelect')
+            return
           }
         } else {
-          if (eventType === 'down') {
-            if (getters.selectionExists) commit('resetSelect')
-          }
           action = {
             type: 'tool',
             coords,
           }
         }
         dispatch('handleAction', action)
-      } else {
+      } else if (getters.isTool(['rectangle-select', 'circle-select'])) {
         if (eventType === 'down') {
           commit('startSelect', coords)
         } else {
@@ -102,10 +105,10 @@ export default {
         if (payload.type === 'clear') {
           ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
         } else {
-          if (state.tool === 'pencil') {
+          if (getters.isTool(['pencil', 'bucket'])) {
             ctx.fillStyle = state.color
             ctx.fillRect(...params)
-          } else if (state.tool === 'eraser') {
+          } else if (getters.isTool(['eraser'])) {
             ctx.clearRect(...params)
           }
         }

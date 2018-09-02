@@ -59,7 +59,7 @@ button img {
 .tools {
   margin-right: 30px;
 
-  .eraser {
+  .bucket {
     margin-right: 10px;
   }
 }
