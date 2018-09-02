@@ -2,12 +2,14 @@
   <div
     class="root"
   >
-    <Toolbar />
-    <div>
-      <div v-if="tool === 'pencil'">
-        <ColorPicker />
+    <div class="controls">
+      <Toolbar />
+      <div>
+        <div v-if="tool === 'pencil'">
+          <ColorPicker />
+        </div>
+        <div v-else-if="tool === 'eraser'" />
       </div>
-      <div v-else-if="tool === 'eraser'"/>
     </div>
     <div>
       <GridCanvas/>
@@ -79,5 +81,13 @@ export default {
   canvas:last-of-type {
     position: relative;
   }
+}
+.controls {
+  display: flex;
+  align-items: center;
+  & > * {
+    margin-right: 50px;
+  }
+  margin: 10px 0;
 }
 </style>
