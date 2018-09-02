@@ -1,4 +1,4 @@
-import { getCanvasFromData, scaleCanvas, scale, getDataFromCtxOperations } from '../helpers'
+import { getCanvasFromData, scaleCanvas, scale, transformData } from '../helpers'
 import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
 
 import selection from './selection'
@@ -101,7 +101,7 @@ export default {
         ]
       }
 
-      let imageData = getDataFromCtxOperations((ctx) => {
+      let imageData = transformData(state.spritesheet, (ctx) => {
         if (payload.type === 'clear') {
           ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
         } else {

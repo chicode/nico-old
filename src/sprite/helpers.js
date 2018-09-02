@@ -16,8 +16,12 @@ export function getCanvasFromData (data) {
   return canvas
 }
 
-export function getDataFromCtxOperations (func) {
+export function transformData (data, func) {
+  // first, apply the data to the global ctx
+  getCanvasFromData(data)
+  // then perform the passed operations
   func(ctx)
+  // and return the data from the global ctx
   return getDataFromCtx(ctx)
 }
 
