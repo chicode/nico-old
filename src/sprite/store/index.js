@@ -16,10 +16,8 @@ export default {
       ? JSON.parse('[' + window.localStorage.getItem('spritesheet') + ']')
       : new Array(CANVAS_SIZE ** 2 * 4),
     tool: 'pencil',
-    toolOptions: {
-      width: 1,
-      color: 'black',
-    },
+    width: 1,
+    color: 'black',
   },
 
   getters: {
@@ -47,7 +45,11 @@ export default {
 
     // setting the color or tool makes it possible that clicking on the same pixel will produce a different result
     setColor (state, color) {
-      state.toolOptions.color = color
+      state.color = color
+      window.lastCoords = [null, null]
+    },
+    setWidth (state, width) {
+      state.width = width
       window.lastCoords = [null, null]
     },
     setTool (state, tool) {
@@ -89,10 +91,10 @@ export default {
         params = getters.accountForNegativeSize
       } else if (payload.type === 'tool') {
         params = [
-          payload.coords[0] - Math.floor(state.toolOptions.width / 2),
-          payload.coords[1] - Math.floor(state.toolOptions.width / 2),
-          state.toolOptions.width,
-          state.toolOptions.width,
+          payload.coords[0] - Math.floor(state.width / 2),
+          payload.coords[1] - Math.floor(state.width / 2),
+          state.width,
+          state.width,
         ]
       }
 
@@ -101,7 +103,7 @@ export default {
           ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
         } else {
           if (state.tool === 'pencil') {
-            ctx.fillStyle = state.toolOptions.color
+            ctx.fillStyle = state.color
             ctx.fillRect(...params)
           } else if (state.tool === 'eraser') {
             ctx.clearRect(...params)

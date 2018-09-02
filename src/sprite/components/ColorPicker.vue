@@ -20,7 +20,7 @@ export default {
   COLORS,
 
   computed: {
-    ...mapState('sprite', ['toolOptions']),
+    ...mapState('sprite', ['color']),
   },
 
   methods: {

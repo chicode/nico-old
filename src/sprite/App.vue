@@ -4,12 +4,7 @@
   >
     <div class="controls">
       <Toolbar />
-      <div>
-        <div v-if="tool === 'pencil'">
-          <ColorPicker />
-        </div>
-        <div v-else-if="tool === 'eraser'" />
-      </div>
+      <Optionbar />
     </div>
     <div>
       <GridCanvas/>
@@ -20,11 +15,12 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex'
 import { SCALE } from './constants'
 
-import ColorPicker from './components/ColorPicker'
 import Toolbar from './components/Toolbar'
+import Optionbar from './components/Optionbar'
+
 import GridCanvas from './components/GridCanvas'
 import MainCanvas from './components/MainCanvas'
 import OverlayCanvas from './components/OverlayCanvas'
@@ -33,11 +29,7 @@ export default {
   name: 'Sprite',
 
   components: {
-    ColorPicker, GridCanvas, MainCanvas, OverlayCanvas, Toolbar,
-  },
-
-  computed: {
-    ...mapState('sprite', ['tool', 'spritesheet']),
+    GridCanvas, MainCanvas, OverlayCanvas, Toolbar, Optionbar,
   },
 
   mounted () {

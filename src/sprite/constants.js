@@ -32,3 +32,6 @@ export const TOOLS = [
 export const SELECTION_WIDTH = 2
 export const SELECTION_COLOR = 'blue'
 export const SELECTION_DASH = [5, 2]
+
+export const MIN_TOOL_WIDTH = 1
+export const MAX_TOOL_WIDTH = 10
