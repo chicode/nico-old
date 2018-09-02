@@ -3,6 +3,9 @@ import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
 
 import selection from './selection'
 
+window.mouseDown = false
+window.lastCoords = [null, null]
+
 export default {
   namespaced: true,
 
@@ -104,13 +107,22 @@ export default {
 
     mouseDown ({ dispatch, commit }, coords) {
       window.mouseDown = true
-      dispatch('change', { eventType: 'down', coords })
+      if (coords[0] !== window.lastCoords[0] || coords[1] !== window.lastCoords[1]) {
+        dispatch('change', { eventType: 'down', coords })
+        window.lastCoords = coords
+      }
     },
     mouseUp ({ commit }) {
       window.mouseDown = false
     },
     mouseMove ({ state, dispatch }, coords) {
-      if (window.mouseDown) dispatch('change', { eventType: 'move', coords })
+      if (
+        window.mouseDown &&
+        (coords[0] !== window.lastCoords[0] || coords[1] !== window.lastCoords[1])
+      ) {
+        dispatch('change', { eventType: 'move', coords })
+        window.lastCoords = coords
+      }
     },
   },
 }
