@@ -1,6 +1,6 @@
 // inline loader syntax used because otherwise this loader doesn't work
 // eslint-disable-next-line
-import mars from 'raw-loader!./mars.raw'
+import mars from '!raw-loader!./mars.raw'
 
 // combines user code with the mars library to make a runnable program
 function prepareCode (code) {
@@ -84,9 +84,11 @@ export default {
           state,
         }
 
+        const code = prepareCode(state.code)
+
         try {
           // eslint-disable-next-line
-          eval(prepareCode(state.code))
+          eval(code)
         } catch (e) {
           commit('setError', e.message)
         }
