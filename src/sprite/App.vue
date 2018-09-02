@@ -3,8 +3,8 @@
     class="root"
   >
     <div class="controls">
-      <Toolbar />
-      <Optionbar />
+      <ToolBar />
+      <OptionBar />
     </div>
     <div>
       <GridCanvas/>
@@ -18,8 +18,8 @@
 import { mapActions } from 'vuex'
 import { SCALE } from './constants'
 
-import Toolbar from './components/Toolbar'
-import Optionbar from './components/Optionbar'
+import ToolBar from './components/ToolBar'
+import OptionBar from './components/OptionBar'
 
 import GridCanvas from './components/GridCanvas'
 import MainCanvas from './components/MainCanvas'
@@ -29,7 +29,7 @@ export default {
   name: 'Sprite',
 
   components: {
-    GridCanvas, MainCanvas, OverlayCanvas, Toolbar, Optionbar,
+    GridCanvas, MainCanvas, OverlayCanvas, ToolBar, OptionBar,
   },
 
   mounted () {
@@ -69,6 +69,7 @@ export default {
 .root {
   canvas {
     position: absolute;
+    padding: 5px;
   }
   canvas:last-of-type {
     position: relative;

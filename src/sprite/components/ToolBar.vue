@@ -36,7 +36,7 @@ import { mapMutations, mapActions, mapState } from 'vuex'
 import { TOOLS } from '../constants'
 
 export default {
-  name: 'Toolbar',
+  name: 'ToolBar',
 
   TOOLS,
 
