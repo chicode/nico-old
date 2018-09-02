@@ -45,11 +45,14 @@ export default {
       window.localStorage.setItem('spritesheet', state.spritesheet)
     },
 
+    // setting the color or tool makes it possible that clicking on the same pixel will produce a different result
     setColor (state, color) {
       state.toolOptions.color = color
+      window.lastCoords = [null, null]
     },
     setTool (state, tool) {
       state.tool = tool
+      window.lastCoords = [null, null]
     },
   },
 
