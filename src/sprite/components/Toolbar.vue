@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      v-for="tool in TOOLS"
+      v-for="tool in $options.TOOLS"
       :key="tool"
       class="tool"
       @click="setTool(tool)"
@@ -33,11 +33,7 @@ import { TOOLS } from '../constants'
 export default {
   name: 'Toolbar',
 
-  data: function () {
-    return {
-      TOOLS,
-    }
-  },
+  TOOLS,
 
   computed: {
     ...mapState('sprite', ['tool']),
