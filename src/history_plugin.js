@@ -31,9 +31,8 @@ export default (module) => (store) => {
       undo ({ state, getters, commit }) {
         if (getters.canUndo()) {
           index--
-          // this is super hacky, but the reason to prefer this over store.replaceState is because
-          // setState affects all modules, and this code needs to revert only the module of the history that this plugin controls
-          // https://github.com/vuejs/vuex/issues/1362
+          // this is super hacky, but the reason that object destructuring is used here is because
+          // replaceState affects all modules, and this code needs to revert only the module of the history that this plugin controls
           store.replaceState({ ...store.state, [module]: history[index] })
         }
       },
