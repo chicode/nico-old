@@ -1,12 +1,17 @@
 <template>
-  <canvas ref="grid" />
+  <canvas
+    ref="grid"
+    :style="{ padding: $options.CANVAS_PADDING_OUTER + 'px' }"
+  />
 </template>
 <script>
 import { initCanvas } from '../helpers'
-import { GRID_SIZE, GRID_WIDTH, GRID_COLOR, GRID_FONT, GRID_NUMBER, SCALE, CANVAS_SIZE, CANVAS_PADDING } from '../constants'
+import { GRID_SIZE, GRID_WIDTH, GRID_COLOR, GRID_FONT, GRID_NUMBER, SCALE, CANVAS_SIZE, CANVAS_PADDING, CANVAS_PADDING_OUTER } from '../constants'
 
 export default {
   name: 'GridCanvas',
+
+  CANVAS_PADDING_OUTER,
 
   mounted () {
     const el = this.$refs.grid

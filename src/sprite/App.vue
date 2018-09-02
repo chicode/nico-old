@@ -16,7 +16,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { SCALE } from './constants'
+import { SCALE, CANVAS_PADDING, CANVAS_PADDING_OUTER } from './constants'
 
 import ToolBar from './components/ToolBar'
 import OptionBar from './components/OptionBar'
@@ -58,8 +58,8 @@ export default {
 
     getCoordsFromEvent (event) {
       return [
-        event.offsetX,
-        event.offsetY,
+        event.offsetX - CANVAS_PADDING_OUTER - CANVAS_PADDING,
+        event.offsetY - CANVAS_PADDING_OUTER - CANVAS_PADDING,
       ].map(coord => Math.floor(coord / SCALE))
     },
   },
@@ -70,8 +70,6 @@ export default {
 .root {
   canvas {
     position: absolute;
-    // give the user a bit more hitbox
-    padding: 10px;
   }
   canvas:last-of-type {
     position: relative;

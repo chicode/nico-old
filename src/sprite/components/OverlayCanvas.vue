@@ -1,14 +1,19 @@
 <template>
-  <canvas ref="overlay" />
+  <canvas
+    ref="overlay"
+    :style="{ padding: $options.CANVAS_PADDING_OUTER + 'px' }"
+  />
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex'
 import { initCanvas, clearCtx, scale } from '../helpers'
-import { SELECTION_WIDTH, SELECTION_COLOR, SELECTION_DASH, CANVAS_PADDING } from '../constants'
+import { SELECTION_WIDTH, SELECTION_COLOR, SELECTION_DASH, CANVAS_PADDING, CANVAS_PADDING_OUTER } from '../constants'
 
 export default {
   name: 'OverlayCanvas',
+
+  CANVAS_PADDING_OUTER,
 
   computed: {
     ...mapState({

@@ -45,3 +45,5 @@ export const MAX_TOOL_WIDTH = 10
 // set to the max because both the grid and selection are at risk here, and accounting for the
 // widest one prevents both from being cut off
 export const CANVAS_PADDING = Math.max(SELECTION_WIDTH, GRID_WIDTH)
+// give the user a bit more hitbox
+export const CANVAS_PADDING_OUTER = 10
