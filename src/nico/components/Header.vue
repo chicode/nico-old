@@ -4,7 +4,7 @@
       <button
         v-for="view in $options.VIEWS"
         :key="view"
-        @click="setView"
+        @click="setView(view)"
       >{{ view }}</button>
     </div>
 
