@@ -69,6 +69,8 @@ export default {
 .root {
   canvas {
     position: absolute;
+    // give the user a bit more hitbox
+    padding: 10px;
   }
   canvas:last-of-type {
     position: relative;

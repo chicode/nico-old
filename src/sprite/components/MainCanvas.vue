@@ -1,7 +1,7 @@
 <template>
   <canvas
     ref="main"
-    :style="{ padding: $options.CANVAS_PADDING + 'px' }"
+    :style="{ margin: $options.CANVAS_PADDING + 'px' }"
   />
 </template>
 

@@ -55,3 +55,11 @@ export function clearCtx (ctx) {
 export function getDataFromCtx (ctx) {
   return ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE).data
 }
+
+export function lowerBoundary (coords) {
+  return coords.map((i) => (i < 0 ? 0 : i))
+}
+
+export function upperBoundary (coords) {
+  return coords.map((i) => (i > CANVAS_SIZE ? CANVAS_SIZE : i))
+}

@@ -1,3 +1,5 @@
+import { lowerBoundary, upperBoundary } from '../helpers'
+
 export default {
   state: {
     selectStart: [0, 0],
@@ -22,6 +24,7 @@ export default {
 
   mutations: {
     resizeSelect (state, coords) {
+      coords = upperBoundary(coords)
       state.selectSize = [coords[0] - state.selectStart[0], coords[1] - state.selectStart[1]]
     },
     resetSelect (state) {
@@ -29,7 +32,7 @@ export default {
     },
     startSelect (state, start) {
       state.selectSize = [0, 0]
-      state.selectStart = start
+      state.selectStart = lowerBoundary(start)
     },
   },
 }
