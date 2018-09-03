@@ -67,3 +67,11 @@ export function lowerBoundary (coords) {
 export function upperBoundary (coords) {
   return coords.map((i) => (i > CANVAS_SIZE ? CANVAS_SIZE : i))
 }
+
+export function correctAntialiasing (data) {
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3]) {
+      data[i + 3] = 255
+    }
+  }
+}

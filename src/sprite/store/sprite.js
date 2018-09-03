@@ -1,4 +1,10 @@
-import { getCanvasFromData, scaleCanvas, scale, transformData } from '../helpers'
+import {
+  getCanvasFromData,
+  scaleCanvas,
+  scale,
+  transformData,
+  correctAntialiasing,
+} from '../helpers'
 import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
 import bucketFill from '../bucket-fill'
 
@@ -47,6 +53,8 @@ export default {
       if (payload.type === 'tool' && rootState.sprite.tool === 'bucket') {
         imageData = bucketFill(state.spritesheet, payload.coords, rootState.sprite.color)
       } else {
+        let antialiasingDanger = false
+
         imageData = transformData(state.spritesheet, (ctx) => {
           if (payload.type === 'clear') {
             ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
@@ -57,6 +65,7 @@ export default {
               ctx.beginPath()
               ctx.ellipse(...rootGetters['sprite/select/getCircleParams'], 0, 0, Math.PI * 2)
               ctx.fill()
+              antialiasingDanger = true
             }
           } else if (payload.type === 'tool') {
             const width = rootState.sprite.width
@@ -74,6 +83,13 @@ export default {
             }
           }
         })
+
+        // the canvas doesn't support turning off antialiasing,
+        // so sometimes it's necessary to correct the antialiased pixels
+        if (antialiasingDanger) {
+          console.log('correctin')
+          correctAntialiasing(imageData)
+        }
       }
 
       commit('setSpritesheet', imageData)
