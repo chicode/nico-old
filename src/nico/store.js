@@ -65,6 +65,7 @@ export default {
     run ({ state, commit, rootGetters, rootState }) {
       commit('setView', 'game')
       commit('setRunning', false)
+      commit('setError', '')
 
       // TODO: lint code and set error state variable
 
