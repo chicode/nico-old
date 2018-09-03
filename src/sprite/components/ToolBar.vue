@@ -8,7 +8,7 @@
         :class="tool"
         @click="setTool(tool)"
       >
-        <img :src="`tools/${tool}.svg`">
+        <img :src="`icons/tools/${tool}.svg`">
       </button>
     </div>
     <div class="other">
@@ -16,17 +16,17 @@
         class="clear"
         @click="clear"
       >
-        <img src="clear.svg">
+        <img src="icons/clear.svg">
       </button>
       <button
         @click="undo"
       >
-        <img src="undo.svg">
+        <img src="icons/undo.svg">
       </button>
       <button
         @click="redo"
       >
-        <img src="redo.svg">
+        <img src="icons/redo.svg">
       </button>
     </div>
   </div>
