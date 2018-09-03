@@ -40,6 +40,9 @@ export default {
     resizeSelect (state, coords) {
       coords = upperBoundary(coords)
       state.selectSize = [coords[0] - state.selectStart[0], coords[1] - state.selectStart[1]]
+      if (state.selectTool === 'circle-select') {
+        state.selectSize = lowerBoundary(state.selectSize)
+      }
     },
     resetSelect (state) {
       state.selectSize = [0, 0]
