@@ -1,6 +1,7 @@
 <template>
   <div class="root">
     <codemirror
+      ref="cm"
       :options="cmOptions"
       :value="code"
       class="editor"
@@ -13,7 +14,11 @@
 import { mapState, mapMutations } from 'vuex'
 import { codemirror } from 'vue-codemirror'
 
+import CodeMirror from 'codemirror'
 import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/addon/hint/show-hint.js'
+import 'codemirror/addon/hint/show-hint.css'
+import 'codemirror/addon/hint/javascript-hint.js'
 import 'codemirror/lib/codemirror.css'
 
 export default {
@@ -33,6 +38,18 @@ export default {
 
   computed: {
     ...mapState('nico', ['code']),
+    cm () {
+      return this.$refs.cm.codemirror
+    },
+  },
+
+  mounted () {
+    this.cm.on('keyup', (cm, event) => {
+      if (!cm.state.completionActive && /* Enables keyboard navigation in autocomplete list */
+            event.keyCode !== 13) { /* Enter - do not open autocomplete list just after item has been selected in it */
+        CodeMirror.commands.autocomplete(cm, null, { completeSingle: false })
+      }
+    })
   },
 
   methods: {
