@@ -47,25 +47,26 @@ export default {
       if (payload.type === 'tool' && rootState.sprite.tool === 'bucket') {
         imageData = bucketFill(state.spritesheet, payload.coords, rootState.sprite.color)
       } else {
-        let params
-
-        if (payload.type === 'selection') {
-          params = rootGetters['sprite/select/accountForNegativeSize']
-        } else if (payload.type === 'tool') {
-          const width = rootState.sprite.width
-          params = [
-            payload.coords[0] - Math.floor(width / 2),
-            payload.coords[1] - Math.floor(width / 2),
-            width,
-            width,
-          ]
-        }
-
         imageData = transformData(state.spritesheet, (ctx) => {
           if (payload.type === 'clear') {
             ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
-          } else {
-            if (rootGetters['sprite/isTool'](['pencil', 'bucket'])) {
+          } else if (payload.type === 'selection') {
+            if (rootState.sprite.select.selectTool === 'rectangle-select') {
+              ctx.fillRect(...rootGetters['sprite/select/getRectParams'])
+            } else if (rootState.sprite.select.selectTool === 'circle-select') {
+              ctx.beginPath()
+              ctx.ellipse(...rootGetters['sprite/select/getCircleParams'], 0, 0, Math.PI * 2)
+              ctx.fill()
+            }
+          } else if (payload.type === 'tool') {
+            const width = rootState.sprite.width
+            const params = [
+              payload.coords[0] - Math.floor(width / 2),
+              payload.coords[1] - Math.floor(width / 2),
+              width,
+              width,
+            ]
+            if (rootGetters['sprite/isTool'](['pencil'])) {
               ctx.fillStyle = rootState.sprite.color
               ctx.fillRect(...params)
             } else if (rootGetters['sprite/isTool'](['eraser'])) {

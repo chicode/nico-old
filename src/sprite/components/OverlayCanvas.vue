@@ -17,6 +17,7 @@ export default {
 
   computed: {
     ...mapState('sprite/select', ['selectStart', 'selectSize']),
+    ...mapState('sprite', ['tool']),
   },
 
   watch: {
@@ -43,8 +44,13 @@ export default {
     ...mapMutations('sprite/select', ['setSelectSize']),
     drawSelect (x, y) {
       clearCtx(this.overlayCtx)
-
-      this.overlayCtx.strokeRect(...scale(this.selectStart[0], this.selectStart[1], this.selectSize[0], this.selectSize[1]))
+      if (this.tool === 'rectangle-select') {
+        this.overlayCtx.strokeRect(...scale(this.selectStart[0], this.selectStart[1], this.selectSize[0], this.selectSize[1]))
+      } else {
+        this.overlayCtx.beginPath()
+        this.overlayCtx.ellipse(...scale(this.selectStart[0], this.selectStart[1], this.selectSize[0], this.selectSize[1]), 0, 0, Math.PI * 2)
+        this.overlayCtx.stroke()
+      }
     },
   },
 }

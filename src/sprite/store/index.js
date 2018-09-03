@@ -66,7 +66,7 @@ export default {
         dispatch('sprite/handleAction', action)
       } else if (getters.isTool(['rectangle-select', 'circle-select'])) {
         if (eventType === 'down') {
-          commit('select/startSelect', coords)
+          commit('select/startSelect', { start: coords, tool: state.tool })
         } else {
           commit('select/resizeSelect', coords)
         }
