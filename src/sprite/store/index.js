@@ -1,8 +1,15 @@
 import { getCanvasFromData, scaleCanvas, scale, transformData } from '../helpers'
 import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
 import bucketFill from '../bucket-fill'
+import historyPlugin from './history-plugin'
 
 import selection from './selection'
+
+export const history = historyPlugin('sprite', [], (store) => {
+  // hacky fix to save spritesheet without mutation
+  window.localStorage.setItem('spritesheet', store.state.sprite.spritesheet)
+  window.lastCoords = [null, null]
+})
 
 window.mouseDown = false
 window.lastCoords = [null, null]
