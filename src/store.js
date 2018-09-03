@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import nico from './nico/store'
 import sprite from './sprite/store'
 
-import historyPlugin from './history_plugin'
+import historyPlugin from './history-plugin'
 
 Vue.use(Vuex)
 

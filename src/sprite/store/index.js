@@ -1,6 +1,6 @@
 import { getCanvasFromData, scaleCanvas, scale, transformData } from '../helpers'
 import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
-import bucketFill from '../bucket_fill'
+import bucketFill from '../bucket-fill'
 
 import selection from './selection'
 
