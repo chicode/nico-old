@@ -32,7 +32,7 @@ export const SELECTION_COLOR = 'blue'
 export const SELECTION_DASH = [5, 2]
 
 export const MIN_TOOL_WIDTH = 1
-export const MAX_TOOL_WIDTH = 10
+export const MAX_TOOL_WIDTH = 20
 
 // helps get rid of stylistic elements being cut off at the edge of the canvas
 // set to the max because both the grid and selection are at risk here, and accounting for the
