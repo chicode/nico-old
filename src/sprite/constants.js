@@ -8,7 +8,8 @@ export const CANVAS_SIZE = GRID_SIZE * GRID_NUMBER
 export const SCALE = 10
 
 export const COLORS = {
-  night: '#000000',
+  // black is not exactly black bc true black is reserved
+  night: '#000001',
   crown: '#572956',
   rose: '#B14156',
   sunset: '#EE7B58',

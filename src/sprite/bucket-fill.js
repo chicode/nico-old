@@ -13,9 +13,7 @@ function getColor (data, coords) {
   return [data[i], data[i + 1], data[i + 2], data[i + 3]].join(',')
 }
 
-function setPixel (data, coords, color) {
-  const i = getIndexFromCoords(coords)
-  const [red, green, blue] = color
+function setPixel (data, i, red, green, blue) {
   data[i] = red
   data[i + 1] = green
   data[i + 2] = blue
@@ -67,24 +65,24 @@ function search (data, coords, color, traversed) {
 export default function bucketFill (data, initialCoords, color) {
   // returning a new array is necessary for vuex to detect the change
   data = data.slice()
-  color = hexToRgb(color)
+  const [red, green, blue] = hexToRgb(color)
 
   const allCoords = search(data, initialCoords, getColor(data, initialCoords), [initialCoords])
   for (let coords of allCoords) {
-    setPixel(data, coords, color)
+    setPixel(data, getIndexFromCoords(coords), red, green, blue)
   }
   return data
 }
 
+// this function works by going through the canvas, and converting all true black pixels to the desired color
+// this works because the black used in Nico isn't actually true black
+// black is chosen as the color to draw initially because unlike every other color, the rgb of black aren't changed when it's antialiased
+// only its alpha - this makes it possible to differentiate it
 export function correctAntialiasing (data, color) {
   const [red, green, blue] = hexToRgb(color)
-  console.log(color)
   for (let i = 0; i < data.length; i += 4) {
     if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0 && data[i + 3]) {
-      data[i] = red
-      data[i + 1] = green
-      data[i + 2] = blue
-      data[i + 3] = 255
+      setPixel(data, i, red, green, blue)
     }
   }
 }
