@@ -17,7 +17,7 @@ export default {
     code: window.localStorage.getItem('code') || '',
     compiledCode: '',
     error: '',
-    view: 'sprite',
+    view: window.localStorage.getItem('view') || 'sprite',
     paused: false,
     running: false,
     sprites: [],
@@ -36,6 +36,7 @@ export default {
       if (state.running) {
         state.paused = true
       }
+      window.localStorage.setItem('view', state.view)
     },
     togglePause (state) {
       state.paused = !state.paused
