@@ -29,7 +29,7 @@ export default {
 </script>
 
 <styles lang="stylus">
-button *,
+button, button *,
 img,
 .no-interaction {
   -webkit-user-select: none;

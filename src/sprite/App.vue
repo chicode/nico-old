@@ -2,7 +2,7 @@
   <div
     class="root"
   >
-    <div class="controls">
+    <div class="controls no-interaction">
       <ToolBar />
       <OptionBar />
     </div>
