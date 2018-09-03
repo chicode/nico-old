@@ -21,7 +21,6 @@ function setPixel (data, coords, color) {
   data[i + 2] = blue
   data[i + 3] = 255
 }
-
 function hexToRgb (hex) {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
@@ -30,7 +29,9 @@ function hexToRgb (hex) {
   })
 
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : null
+  if (!result) throw new Error('Bucket fill color must be in hex')
+
+  return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
 }
 
 function search (data, coords, color, traversed) {
@@ -41,6 +42,7 @@ function search (data, coords, color, traversed) {
       inBounds(newCoords),
       getColor(data, newCoords) === color,
       traversed.reduce(
+
         (acc, val) => acc && !(val[0] === newCoords[0] && val[1] === newCoords[1]),
         true,
       )
@@ -65,13 +67,24 @@ function search (data, coords, color, traversed) {
 export default function bucketFill (data, initialCoords, color) {
   // returning a new array is necessary for vuex to detect the change
   data = data.slice()
-
   color = hexToRgb(color)
-  if (!color) throw new Error('Bucket fill color must be in hex')
 
   const allCoords = search(data, initialCoords, getColor(data, initialCoords), [initialCoords])
   for (let coords of allCoords) {
     setPixel(data, coords, color)
   }
   return data
+}
+
+export function correctAntialiasing (data, color) {
+  const [red, green, blue] = hexToRgb(color)
+  console.log(color)
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0 && data[i + 3]) {
+      data[i] = red
+      data[i + 1] = green
+      data[i + 2] = blue
+      data[i + 3] = 255
+    }
+  }
 }

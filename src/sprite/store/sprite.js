@@ -1,12 +1,6 @@
-import {
-  getCanvasFromData,
-  scaleCanvas,
-  scale,
-  transformData,
-  correctAntialiasing,
-} from '../helpers'
+import { getCanvasFromData, scaleCanvas, scale, transformData } from '../helpers'
 import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
-import bucketFill from '../bucket-fill'
+import bucketFill, { correctAntialiasing } from '../bucket-fill'
 
 function getStoredSpritesheet () {
   const spritesheet = window.localStorage.getItem('spritesheet')
@@ -62,7 +56,8 @@ export default {
             if (rootState.sprite.select.selectTool === 'rectangle-select') {
               ctx.fillRect(...rootGetters['sprite/select/getRectParams'])
             } else if (rootState.sprite.select.selectTool === 'circle-select') {
-              ctx.fillStyle = rootState.sprite.color
+              // true black
+              ctx.fillStyle = '#000000'
               ctx.beginPath()
               ctx.ellipse(...rootGetters['sprite/select/getCircleParams'], 0, 0, Math.PI * 2)
               ctx.fill()
@@ -87,8 +82,9 @@ export default {
 
         // the canvas doesn't support turning off antialiasing,
         // so sometimes it's necessary to correct the antialiased pixels
+        // TODO: remove this hack when the browsers come out with a decent canvas api that includes the ability to control antialiasing
         if (antialiasingDanger) {
-          correctAntialiasing(imageData)
+          correctAntialiasing(imageData, rootState.sprite.color)
         }
       }
 
