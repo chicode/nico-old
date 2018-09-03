@@ -4,13 +4,13 @@ function getIndexFromCoords (coords) {
   return coords[1] * (CANVAS_SIZE * 4) + coords[0] * 4
 }
 
-function getColor (data, coords) {
-  const i = getIndexFromCoords(coords)
-  return [data[i], data[i + 1], data[i + 2]].join(',')
+function inBounds (coords) {
+  return coords[0] >= 0 && coords[0] < CANVAS_SIZE && coords[1] >= 0 && coords[1] < CANVAS_SIZE
 }
 
-function isPixel (data, coords) {
-  return data[getIndexFromCoords(coords) + 3] === 255
+function getColor (data, coords) {
+  const i = getIndexFromCoords(coords)
+  return [data[i], data[i + 1], data[i + 2], data[i + 3]].join(',')
 }
 
 function setPixel (data, coords, color) {
@@ -19,6 +19,7 @@ function setPixel (data, coords, color) {
   data[i] = red
   data[i + 1] = green
   data[i + 2] = blue
+  data[i + 3] = 255
 }
 
 function hexToRgb (hex) {
@@ -37,8 +38,8 @@ function search (data, coords, color, traversed) {
     let newCoords = [coords[0] + direction[0], coords[1] + direction[1]]
     if (
       // new coordinate is of the right color and has not already been added
+      inBounds(newCoords) &&
       getColor(data, newCoords) === color &&
-      isPixel(data, newCoords) &&
       traversed.reduce(
         (acc, val) => acc && !(val[0] === newCoords[0] && val[1] === newCoords[1]),
         true,
