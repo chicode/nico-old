@@ -81,7 +81,7 @@ export default {
         // eslint-disable-next-line no-unused-vars
         const _env = {
           ctx: state.mainCtx,
-          sprites: rootGetters['sprite/sprites'],
+          sprites: rootGetters['sprite/sprite/sprites'],
           state,
         }
 
