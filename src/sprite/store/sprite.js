@@ -62,6 +62,7 @@ export default {
             if (rootState.sprite.select.selectTool === 'rectangle-select') {
               ctx.fillRect(...rootGetters['sprite/select/getRectParams'])
             } else if (rootState.sprite.select.selectTool === 'circle-select') {
+              ctx.fillStyle = rootState.sprite.color
               ctx.beginPath()
               ctx.ellipse(...rootGetters['sprite/select/getCircleParams'], 0, 0, Math.PI * 2)
               ctx.fill()
