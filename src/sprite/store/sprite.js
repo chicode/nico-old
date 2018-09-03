@@ -87,7 +87,6 @@ export default {
         // the canvas doesn't support turning off antialiasing,
         // so sometimes it's necessary to correct the antialiased pixels
         if (antialiasingDanger) {
-          console.log('correctin')
           correctAntialiasing(imageData)
         }
       }
