@@ -17,7 +17,7 @@ export default {
   CANVAS_PADDING_OUTER,
 
   computed: {
-    ...mapState('sprite', ['spritesheet']),
+    ...mapState('sprite/sprite', ['spritesheet']),
   },
 
   watch: {

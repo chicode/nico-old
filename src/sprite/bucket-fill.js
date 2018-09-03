@@ -36,6 +36,16 @@ function hexToRgb (hex) {
 function search (data, coords, color, traversed) {
   for (const direction of [[0, -1], [0, 1], [-1, 0], [1, 0]]) {
     let newCoords = [coords[0] + direction[0], coords[1] + direction[1]]
+    /*
+    console.log(
+      inBounds(newCoords),
+      getColor(data, newCoords) === color,
+      traversed.reduce(
+        (acc, val) => acc && !(val[0] === newCoords[0] && val[1] === newCoords[1]),
+        true,
+      )
+    )
+    */
     if (
       // new coordinate is of the right color and has not already been added
       inBounds(newCoords) &&

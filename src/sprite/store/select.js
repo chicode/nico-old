@@ -1,6 +1,8 @@
 import { lowerBoundary, upperBoundary } from '../helpers'
 
 export default {
+  namespaced: true,
+
   state: {
     selectStart: [0, 0],
     selectSize: [0, 0],

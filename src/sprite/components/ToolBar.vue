@@ -48,7 +48,7 @@ export default {
   methods: {
     ...mapMutations('sprite', ['setTool']),
     ...mapActions('history', ['undo', 'redo']),
-    ...mapActions('sprite', ['clear']),
+    ...mapActions('sprite/sprite', ['clear']),
   },
 }
 </script>

@@ -16,10 +16,7 @@ export default {
   CANVAS_PADDING_OUTER,
 
   computed: {
-    ...mapState({
-      selectStart: state => state.sprite.selection.selectStart,
-      selectSize: state => state.sprite.selection.selectSize,
-    }),
+    ...mapState('sprite/select', ['selectStart', 'selectSize']),
   },
 
   watch: {
@@ -43,7 +40,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('sprite', ['setSelectSize']),
+    ...mapMutations('sprite/select', ['setSelectSize']),
     drawSelect (x, y) {
       clearCtx(this.overlayCtx)
 
