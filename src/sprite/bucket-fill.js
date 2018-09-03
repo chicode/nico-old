@@ -80,9 +80,9 @@ export default function bucketFill (data, initialCoords, color) {
 // only its alpha - this makes it possible to differentiate it
 export function correctAntialiasing (data, color) {
   const [red, green, blue] = hexToRgb(color)
-  for (let i = 0; i < data.length; i += 4) {
-    if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0 && data[i + 3]) {
-      setPixel(data, i, red, green, blue)
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] !== 0) {
+      setPixel(data, i - 3, red, green, blue)
     }
   }
 }

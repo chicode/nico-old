@@ -1,4 +1,10 @@
-import { getCanvasFromData, scaleCanvas, scale, transformData } from '../helpers'
+import {
+  getCanvasFromData,
+  getCanvasFromData2,
+  scaleCanvas,
+  scale,
+  transformData,
+} from '../helpers'
 import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
 import bucketFill, { correctAntialiasing } from '../bucket-fill'
 
@@ -47,7 +53,24 @@ export default {
       if (payload.type === 'tool' && rootState.sprite.tool === 'bucket') {
         imageData = bucketFill(state.spritesheet, payload.coords, rootState.sprite.color)
       } else {
-        let antialiasingDanger = false
+        let ellipse
+        if (
+          payload.type === 'selection' &&
+          rootState.sprite.select.selectTool === 'circle-select'
+        ) {
+          let ellipseData = transformData(null, (ctx) => {
+            ctx.fillStyle = rootState.sprite.color
+            ctx.beginPath()
+            ctx.ellipse(...rootGetters['sprite/select/getCircleParams'], 0, 0, Math.PI * 2)
+            ctx.fill()
+          })
+          // the canvas doesn't support turning off antialiasing,
+          // so sometimes it's necessary to correct the antialiased pixels
+          // TODO: remove this hack when the browsers come out with a decent canvas api that includes the ability to control antialiasing
+          correctAntialiasing(ellipseData, rootState.sprite.color)
+          // 2 function is used so that this doesn't interfere with the other canvas below
+          ellipse = getCanvasFromData2(ellipseData)
+        }
 
         imageData = transformData(state.spritesheet, (ctx) => {
           if (payload.type === 'clear') {
@@ -56,12 +79,7 @@ export default {
             if (rootState.sprite.select.selectTool === 'rectangle-select') {
               ctx.fillRect(...rootGetters['sprite/select/getRectParams'])
             } else if (rootState.sprite.select.selectTool === 'circle-select') {
-              // true black
-              ctx.fillStyle = '#000000'
-              ctx.beginPath()
-              ctx.ellipse(...rootGetters['sprite/select/getCircleParams'], 0, 0, Math.PI * 2)
-              ctx.fill()
-              antialiasingDanger = true
+              ctx.drawImage(ellipse, 0, 0)
             }
           } else if (payload.type === 'tool') {
             const width = rootState.sprite.width
@@ -79,13 +97,6 @@ export default {
             }
           }
         })
-
-        // the canvas doesn't support turning off antialiasing,
-        // so sometimes it's necessary to correct the antialiased pixels
-        // TODO: remove this hack when the browsers come out with a decent canvas api that includes the ability to control antialiasing
-        if (antialiasingDanger) {
-          correctAntialiasing(imageData, rootState.sprite.color)
-        }
       }
 
       commit('setSpritesheet', imageData)
