@@ -1,28 +1,42 @@
 import cloneDeep from 'lodash.clonedeep'
 
-export default (module, excludedMutations = [], afterRevert = () => {}) => (store) => {
+export default (modules, afterRevert = () => {}) => (store) => {
   let history = []
 
-  history.push(cloneDeep(store.state[module]))
+  function getModuleState (state) {
+    return modules.reduce((acc, val) => acc[val], state)
+  }
+  function getModuleStateCloned (state) {
+    return cloneDeep(getModuleState(state))
+  }
+
+  function setModuleState (state, assign) {
+    // assign a state to a heirarchy of modules
+    // similar to getModuleState, but avoids processing the final child
+    // in the reduce so that it can assign to it
+    modules.slice(0, -1).reduce((acc, val) => acc[val], state)[modules[modules.length - 1]] = assign
+  }
+
+  history.push(getModuleStateCloned(store.state))
   let index = 0
 
   store.subscribe(({ type, payload }, state) => {
-    // mutation is of the right module
-    if (type.split('/')[0] === module && !excludedMutations.includes(type.split('/')[1])) {
+    if (type.includes(modules.join('/'))) {
       // some redoing/undoing has occured
       if (index < history.length - 1) {
         history.splice(index + 1)
       }
 
-      history.push(cloneDeep(state[module]))
+      history.push(getModuleStateCloned(state))
       index++
     }
   })
 
   function revert () {
-    // this is super hacky, but the reason that object destructuring is used here is because
     // replaceState affects all modules, and this code needs to revert only the module of the history that this plugin controls
-    store.replaceState({ ...store.state, [module]: cloneDeep(history[index]) })
+    const state = store.state
+    setModuleState(state, cloneDeep(history[index]))
+    store.replaceState(state)
 
     afterRevert(store)
   }
