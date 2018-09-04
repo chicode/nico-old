@@ -29,19 +29,6 @@ export default {
 </script>
 
 <styles lang="stylus">
-button, button *,
-img,
-.no-interaction {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-}
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400,700|Source+Code+Pro:400')
+@import '../styles/index.styl'
 </styles>
