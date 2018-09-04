@@ -1,10 +1,10 @@
 <template>
-  <div class="root">
+  <div class="editor">
     <codemirror
       ref="cm"
       :options="cmOptions"
       :value="code"
-      class="editor"
+      class="vue-CodeMirror"
       @input="setCode"
     />
   </div>
@@ -35,7 +35,6 @@ export default {
       },
     }
   },
-
   computed: {
     ...mapState('nico', ['code']),
     cm () {
@@ -59,7 +58,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.root, .editor {
+.root, .editor, .vue-CodeMirror {
   height: 100%;
 }
 </style>

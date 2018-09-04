@@ -3,6 +3,7 @@
 
 * {
   font-family: fonts.body;
+  font-size: font-sizes[2];
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -22,12 +23,24 @@ p, h3, .h3 {
   font-size: font-sizes[2];
 }
 
+.button, .button-2 {
+  cursor: pointer;
+  font-family: fonts.heading;
+}
+
 .button {
   button(palette.light-green);
 }
 
 .tile {
   tile('tile', white)
+}
+
+.button-2 {
+  text-weight: bold;
+}
+.button-2.active {
+  color: colors.accent-1;
 }
 
 .accent-1 {
@@ -50,4 +63,8 @@ p, h3, .h3 {
 
 .empty {
   height: 0;
+}
+
+.root, .CodeMirror {
+  height: 100%;
 }

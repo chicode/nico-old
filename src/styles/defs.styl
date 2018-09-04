@@ -98,6 +98,11 @@ tile(shadow-offset, background-color) {
     }
   }
 
+  &:disabled {
+    background: colors.shadow;
+    color: black;
+  }
+
   // 1: this makes it so that the psuedo element appears behind the parent
   // event when the parent's transform causes it to shift to a new stacking context
   // https://katydecorah.com/code/z-index-and-transform/

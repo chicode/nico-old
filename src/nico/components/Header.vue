@@ -1,17 +1,22 @@
 <template>
   <div class="header">
-    <div>
+    <div class="tools">
       <button
-        v-for="view in $options.VIEWS"
-        :key="view"
-        @click="setView(view)"
-      >{{ view }}</button>
+        v-for="iview in $options.VIEWS"
+        :key="iview"
+        :class="'button-2' + (view === iview ? ' active' : '')"
+        @click="setView(iview)"
+      >{{ iview }}</button>
     </div>
 
     <div>
-      <button @click="run">run code</button>
+      <button
+        class="button"
+        @click="run"
+      >run code</button>
       <button
         :disabled="pauseDisabled"
+        class="button"
         @click="togglePause"
       >{{ paused ? 'resume' : 'pause' }}</button>
     </div>
@@ -34,3 +39,19 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="stylus">
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  margin: 10px;
+
+  .tools {
+    display: flex;
+    & > * {
+      margin-right: 20px;
+    }
+  }
+}
+</style>
