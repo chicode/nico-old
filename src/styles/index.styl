@@ -65,6 +65,67 @@ p, h3, .h3 {
   height: 0;
 }
 
-.root, .CodeMirror {
-  height: 100%;
+/* Slider resets https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
+
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+*/
+
+
+input[type=range] {
+  thumb() {
+    border()
+    background: colors.accent-1;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    margin-top: -15px;
+  }
+  track() {
+    height: 8.4px;
+    cursor: pointer;
+    border()
+    background: colors.shadow;
+  }
+
+  &::-webkit-slider-thumb {
+    thumb()
+  }
+  &::-moz-range-thumb {
+    thumb()
+  }
+  &::-ms-thumb {
+    thumb()
+  }
+
+  &::-webkit-slider-runnable-track {
+    track()
+  }
+  &::-moz-range-track {
+    track()
+  }
+  &::-ms-track {
+    track()
+  }
 }

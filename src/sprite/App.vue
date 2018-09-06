@@ -6,9 +6,9 @@
       <ToolBar />
       <OptionBar />
     </div>
-    <div>
-      <GridCanvas />
+    <div class="canvas">
       <MainCanvas />
+      <GridCanvas />
       <OverlayCanvas ref="canvas" />
     </div>
   </div>
@@ -86,10 +86,10 @@ export default {
 .controls {
   display: flex;
   align-items: center;
-  & > * {
-    margin-right: 50px;
-  }
   margin: 10px 0;
 }
-
+.canvas {
+  display: flex;
+  justify-content: center;
+}
 </style>

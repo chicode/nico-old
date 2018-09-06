@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="tools">
+    <div class="views">
       <button
         v-for="iview in $options.VIEWS"
         :key="iview"
@@ -11,7 +11,7 @@
 
     <div>
       <button
-        class="button"
+        class="button run"
         @click="run"
       >run code</button>
       <button
@@ -45,13 +45,16 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
-  margin: 10px;
 
-  .tools {
+  .views {
     display: flex;
     & > * {
-      margin-right: 20px;
+      margin-right: 10px;
     }
+  }
+
+  .run {
+    margin-right: 20px;
   }
 }
 </style>

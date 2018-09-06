@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="50.888115mm"
-   height="50.888115mm"
-   viewBox="0 0 50.888115 50.888115"
+   width="30.280001mm"
+   height="30.280001mm"
+   viewBox="0 0 30.280001 30.280001"
    version="1.1"
    id="svg3268"
    sodipodi:docname="circle-select.svg"
@@ -36,19 +36,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.1388672"
-     inkscape:cx="-1.2208892"
-     inkscape:cy="167.12073"
+     inkscape:zoom="3.4566399"
+     inkscape:cx="-11.380072"
+     inkscape:cy="70.316585"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1448"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1900"
+     inkscape:window-width="945"
      inkscape:window-height="1016"
-     inkscape:window-x="10"
+     inkscape:window-x="965"
      inkscape:window-y="32"
      inkscape:window-maximized="0" />
   <metadata
@@ -67,19 +67,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-127.07016,-112.53674)">
+     transform="translate(-137.37419,-122.84079)">
     <g
        transform="translate(-667.05771,151.55254)"
        id="g1448">
-      <rect
-         ry="0.31949496"
-         rx="0.31949496"
-         y="-39.015804"
-         x="794.12787"
-         height="50.888115"
-         width="50.888115"
-         id="rect1366"
-         style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:2.64583325;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" />
       <circle
          style="opacity:1;fill:none;fill-opacity:1;stroke:#1f1f1f;stroke-width:2.64599967;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:5.29199926, 5.29199926;stroke-dashoffset:5.82119894;stroke-opacity:1;paint-order:markers fill stroke"
          id="circle1368"

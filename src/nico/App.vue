@@ -1,5 +1,5 @@
 <template>
-  <div class="root">
+  <div class="app">
     <Header />
     <!-- https://vuejs.org/v2/guide/components.html#Dynamic-Components -->
     <keep-alive>
@@ -31,4 +31,13 @@ export default {
 <styles lang="stylus">
 @import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400,700|Source+Code+Pro:400')
 @import '../styles/index.styl'
+
+.app {
+  height: 100%;
+  margin: 30px;
+}
+
+.CodeMirror {
+  height: 100%;
+}
 </styles>

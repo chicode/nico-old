@@ -1,17 +1,15 @@
 <template>
-  <div>
+  <div class="toolbar">
     <!-- see nico/App.vue for definition of no-interaction -->
     <div class="tools no-interaction">
       <button
-        v-for="tool in $options.TOOLS"
-        :key="tool"
-        :class="tool"
-        @click="setTool(tool)"
+        v-for="itool in $options.TOOLS"
+        :key="itool"
+        :class="itool + (tool === itool ? ' active' : '')"
+        @click="setTool(itool)"
       >
-        <img :src="`icons/tools/${tool}.svg`">
+        <img :src="`icons/tools/${itool}.svg`">
       </button>
-    </div>
-    <div class="other">
       <button
         class="clear"
         @click="clear"
@@ -54,22 +52,28 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-button img {
-  width: 30px;
+button img{
+  height: 30px;
 }
-.tools {
-  margin-right: 30px;
 
-  .bucket {
+.toolbar {
+  display: flex;
+}
+
+.tools {
+  display: flex;
+
+  .bucket, .circle-select {
+    margin-right: 30px;
+  }
+
+  & > * {
     margin-right: 10px;
   }
-}
-.other {
-  .clear {
-    margin-right: 10px;
+
+  .active path {
+
+    fill: blue;
   }
-}
-.tools, .other {
-  display: inline-block;
 }
 </style>

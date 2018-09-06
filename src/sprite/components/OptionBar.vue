@@ -41,7 +41,9 @@ export default {
 
 <style scoped lang="stylus">
 .option-bar {
+  margin-left: 50px;
   display: flex;
+  justify-content: space-between;
 
   & > * {
     margin-right: 10px;

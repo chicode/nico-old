@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="colorpicker">
     <div
       v-for="color in $options.COLORS"
       :style="{ background: color }"
@@ -30,9 +30,16 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+@import '~@/styles/defs.styl'
+
+.colorpicker {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .color {
-  width: 10px;
-  height: 10px;
-  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: border-width solid black;
 }
 </style>
