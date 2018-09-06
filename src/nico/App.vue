@@ -36,8 +36,4 @@ export default {
   height: 100%;
   margin: 30px;
 }
-
-.CodeMirror {
-  height: 100%;
-}
 </styles>

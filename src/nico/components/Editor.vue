@@ -59,6 +59,18 @@ export default {
 
 <style scoped lang="stylus">
 .root, .editor, .vue-CodeMirror {
+  overflow-y: hidden;
+}
+</style>
+
+<style lang="stylus">
+.CodeMirror {
   height: 100%;
+}
+
+.CodeMirror-gutters {
+  background: white;
+  border-right: 0;
+  width: 60px;
 }
 </style>
