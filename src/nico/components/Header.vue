@@ -18,7 +18,9 @@
         :disabled="pauseDisabled"
         class="button"
         @click="togglePause"
-      >{{ paused ? 'resume' : 'pause' }}</button>
+      >{{ paused ? 'resume' : '&nbsp;pause&nbsp;' }}</button>
+
+      <!-- nbsp exists in order to make button the same width between modes -->
     </div>
   </div>
 </template>
