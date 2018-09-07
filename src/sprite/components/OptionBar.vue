@@ -41,12 +41,14 @@ export default {
 
 <style scoped lang="stylus">
 .option-bar {
+  // prevent colorpicker from being shortened
+  flex: 1;
+
   margin-left: 50px;
   display: flex;
-  justify-content: space-between;
 
   & > * {
-    margin-right: 10px;
+    margin-right: 30px;
   }
 }
 </style>

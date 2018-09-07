@@ -4,6 +4,7 @@
     :max="$options.MAX_TOOL_WIDTH"
     :value="width"
     type="range"
+    class="sizeslider"
     @input="event => setWidth(event.target.value)"
   >
 </template>
@@ -29,4 +30,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+.sizeslider {
+  max-width: 30%;
+}
 </style>
