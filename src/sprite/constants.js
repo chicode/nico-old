@@ -1,6 +1,6 @@
 export const GRID_SIZE = 8
 export const GRID_WIDTH = 2
-export const GRID_COLOR = '#7396af'
+export const GRID_COLOR = '#000000'
 export const GRID_FONT = 'bold 10px Source Code Pro'
 export const GRID_NUMBER = 10
 
@@ -8,8 +8,8 @@ export const CANVAS_SIZE = GRID_SIZE * GRID_NUMBER
 export const SCALE = 10
 
 export const COLORS = {
-  // black is not exactly black bc true black is reserved
-  night: '#000001',
+  // black is not exactly black in order for the grid to be visible
+  night: '#222222',
   crown: '#572956',
   rose: '#B14156',
   sunset: '#EE7B58',
