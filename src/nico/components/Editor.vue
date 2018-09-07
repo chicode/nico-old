@@ -31,7 +31,7 @@ export default {
   data () {
     return {
       cmOptions: {
-        tabSize: 2,
+        tabSize: 4,
         mode: 'text/javascript',
         lineNumbers: true,
       },
@@ -45,12 +45,14 @@ export default {
   },
 
   mounted () {
+  /*
     this.cm.on('keyup', (cm, event) => {
-      if (!cm.state.completionActive && /* Enables keyboard navigation in autocomplete list */
-            event.keyCode !== 13) { /* Enter - do not open autocomplete list just after item has been selected in it */
+      if (!cm.state.completionActive && // Enables keyboard navigation in autocomplete list
+            event.keyCode !== 13) { // Enter - do not open autocomplete list just after item has been selected in it
         CodeMirror.commands.autocomplete(cm, null, { completeSingle: false })
       }
     })
+    */
   },
 
   methods: {
@@ -60,7 +62,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.root, .editor, .vue-CodeMirror {
+.editor, .vue-CodeMirror {
   overflow-y: hidden;
 }
 </style>
@@ -68,6 +70,10 @@ export default {
 <style lang="stylus">
 .CodeMirror {
   height: 100%;
+
+  * {
+    font-family: 'Fantasque Sans Mono';
+  }
 }
 
 .CodeMirror-gutters {

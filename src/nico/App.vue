@@ -29,7 +29,7 @@ export default {
 </script>
 
 <styles lang="stylus">
-@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400,700|Source+Code+Pro:400')
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400')
 @import '../styles/index.styl'
 
 .app {
