@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       cmOptions: {
-        tabSize: 4,
+        tabSize: 2,
         mode: 'text/javascript',
         lineNumbers: true,
       },
