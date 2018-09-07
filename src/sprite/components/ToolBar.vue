@@ -5,10 +5,10 @@
       <button
         v-for="itool in $options.TOOLS"
         :key="itool"
-        :class="itool + (tool === itool ? ' active' : '')"
+        :class="itool"
         @click="setTool(itool)"
       >
-        <img :src="`icons/tools/${itool}.svg`">
+        <img :src="`icons/tools/${itool}${itool === tool ? '-active' : ''}.svg`">
       </button>
       <button
         class="clear"
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-button img{
+button img {
   height: 30px;
 }
 
@@ -69,11 +69,6 @@ button img{
 
   & > * {
     margin-right: 10px;
-  }
-
-  .active path {
-
-    fill: blue;
   }
 }
 </style>

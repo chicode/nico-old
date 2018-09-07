@@ -65,13 +65,13 @@
          transform="matrix(1.0530071,0,0,1.0530071,186.13427,-86.967891)"
          id="g1334">
         <circle
-           style="opacity:1;fill:none;fill-opacity:1;stroke:#1f1f1f;stroke-width:2.76351428;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:22.00138283;stroke-opacity:1;paint-order:markers fill stroke"
+           style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2.76351428;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:22.00138283;stroke-opacity:1;paint-order:markers fill stroke"
            id="path1328"
            cx="656.05927"
            cy="0.29757071"
            r="12.352414" />
         <path
-           style="opacity:1;fill:none;fill-opacity:1;stroke:#1f1f1f;stroke-width:2.76351428;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:22.00138283;stroke-opacity:1;paint-order:markers fill stroke"
+           style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2.76351428;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:22.00138283;stroke-opacity:1;paint-order:markers fill stroke"
            d="M 647.43264,9.1385592 664.90027,-8.3290771"
            id="path1330"
            inkscape:connector-curvature="0" />

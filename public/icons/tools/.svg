@@ -90,7 +90,7 @@
            inkscape:connector-curvature="0"
            id="path1388"
            d="m 894.47094,194.10105 c 0,-7.24514 0,-14.4896 0,-21.7344"
-           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.66555643;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:22.00138283;stroke-opacity:1;paint-order:markers fill stroke" />
+           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1f1f1f;stroke-width:2.66555643;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:22.00138283;stroke-opacity:1;paint-order:markers fill stroke" />
         <path
            transform="matrix(0.52052277,-0.07495806,0.07536269,0.51772804,411.47054,160.11111)"
            inkscape:transform-center-y="-0.50419208"
@@ -107,7 +107,7 @@
            sodipodi:cx="904.86975"
            sodipodi:sides="5"
            id="path1408"
-           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:5.0817399;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:22.00138283;stroke-opacity:1;paint-order:markers fill stroke"
+           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1f1f1f;stroke-width:5.0817399;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:22.00138283;stroke-opacity:1;paint-order:markers fill stroke"
            sodipodi:type="star" />
       </g>
     </g>
