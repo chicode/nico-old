@@ -2,6 +2,8 @@
 // eslint-disable-next-line
 import mars from '!raw-loader!./mars.raw'
 
+import { TEMPLATE } from './constants'
+
 // combines user code with the mars library to make a runnable program
 function prepareCode (code) {
   return `
@@ -14,7 +16,7 @@ export default {
   namespaced: true,
 
   state: {
-    code: window.localStorage.getItem('code') || '',
+    code: window.localStorage.getItem('code') || TEMPLATE,
     compiledCode: '',
     error: '',
     view: window.localStorage.getItem('view') || 'sprite',
