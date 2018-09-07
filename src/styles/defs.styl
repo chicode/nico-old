@@ -1,9 +1,6 @@
 // base colors
 palette = {
-  purple: #AE5CFF,
-  blue: #3976D0,
-  orange: #FF8A00,
-  green: #1CB893,
+  purple: #AE5CFF, blue: #3976D0, orange: #FF8A00, green: #1CB893,
   light-purple: #E2C5FF,
   light-green: #9AFFB8,
   light-blue: #C0D9FF,
@@ -71,6 +68,8 @@ tile(shadow-offset, background-color) {
   // 1
   transform-style: preserve-3d;
 
+  transform: translateY(-1 * shadow-offset / 2);
+
 
   // the tile shadow
   &::after {
@@ -91,7 +90,7 @@ tile(shadow-offset, background-color) {
   }
 
   &:active {
-    transform: translateY(shadow-offset / 2)
+    transform: translateY(0)
 
     &::after {
       bottom: 0;
