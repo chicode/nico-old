@@ -6,6 +6,7 @@
       :value="code"
       class="vue-CodeMirror"
       @input="setCode"
+      @ready="init"
     />
   </div>
 </template>
@@ -44,19 +45,21 @@ export default {
     },
   },
 
-  mounted () {
-  /*
-    this.cm.on('keyup', (cm, event) => {
-      if (!cm.state.completionActive && // Enables keyboard navigation in autocomplete list
-            event.keyCode !== 13) { // Enter - do not open autocomplete list just after item has been selected in it
-        CodeMirror.commands.autocomplete(cm, null, { completeSingle: false })
-      }
-    })
-    */
-  },
-
   methods: {
     ...mapMutations('nico', ['setCode']),
+    init () {
+      document.fonts.ready.then(() => {
+        this.cm.refresh()
+      })
+      /*
+        this.cm.on('keyup', (cm, event) => {
+          if (!cm.state.completionActive && // Enables keyboard navigation in autocomplete list
+                event.keyCode !== 13) { // Enter - do not open autocomplete list just after item has been selected in it
+            CodeMirror.commands.autocomplete(cm, null, { completeSingle: false })
+          }
+        })
+    */
+    },
   },
 }
 </script>
