@@ -1,7 +1,7 @@
 export const GRID_SIZE = 8
 export const GRID_WIDTH = 2
 export const GRID_COLOR = '#000000'
-export const GRID_FONT = 'bold 10px Source Code Pro'
+export const GRID_FONT = 'bold 10px Karla'
 export const GRID_NUMBER = 10
 
 export const CANVAS_SIZE = GRID_SIZE * GRID_NUMBER
