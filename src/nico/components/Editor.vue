@@ -14,12 +14,14 @@
 import { mapState, mapMutations } from 'vuex'
 import { codemirror } from 'vue-codemirror'
 
-import CodeMirror from 'codemirror'
+// import 'codemirror'
+// import 'codemirror/lib/codemirror.js'
 import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/addon/hint/show-hint.js'
-import 'codemirror/addon/hint/show-hint.css'
-import 'codemirror/addon/hint/javascript-hint.js'
 import 'codemirror/lib/codemirror.css'
+
+// import 'codemirror/addon/hint/show-hint.js'
+// import 'codemirror/addon/hint/show-hint.css'
+// import 'codemirror/addon/hint/javascript-hint.js'
 
 export default {
   name: 'Editor',
