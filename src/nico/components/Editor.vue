@@ -15,14 +15,9 @@
 import { mapState, mapMutations } from 'vuex'
 import { codemirror } from 'vue-codemirror'
 
-// import 'codemirror'
-// import 'codemirror/lib/codemirror.js'
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/lib/codemirror.css'
-
-// import 'codemirror/addon/hint/show-hint.js'
-// import 'codemirror/addon/hint/show-hint.css'
-// import 'codemirror/addon/hint/javascript-hint.js'
+import 'codemirror/addon/display/autorefresh.js'
 
 export default {
   name: 'Editor',
@@ -35,30 +30,32 @@ export default {
         tabSize: 2,
         mode: 'text/javascript',
         lineNumbers: true,
+        autorefresh: true,
       },
     }
   },
   computed: {
-    ...mapState('nico', ['code']),
+    ...mapState('nico', ['code', 'error']),
     cm () {
       return this.$refs.cm.codemirror
+    },
+  },
+
+  watch: {
+    error (error) {
+      if (error) {
+        this.cm.markText(error.from, error.to, { className: 'error', atomic: true })
+      }
     },
   },
 
   methods: {
     ...mapMutations('nico', ['setCode']),
     init () {
+      // must wait for webfonts to finish loading, or else editor will be improperly initialized
       document.fonts.ready.then(() => {
         this.cm.refresh()
       })
-      /*
-        this.cm.on('keyup', (cm, event) => {
-          if (!cm.state.completionActive && // Enables keyboard navigation in autocomplete list
-                event.keyCode !== 13) { // Enter - do not open autocomplete list just after item has been selected in it
-            CodeMirror.commands.autocomplete(cm, null, { completeSingle: false })
-          }
-        })
-    */
     },
   },
 }

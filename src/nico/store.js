@@ -6,10 +6,24 @@ import { TEMPLATE } from './constants'
 
 // combines user code with the mars library to make a runnable program
 function prepareCode (code) {
-  return `
-  ${code}
-  ${mars}
-  `
+  return `${code}
+  ${mars}`
+}
+
+function convertError (error) {
+  const { lineno: lineNumber, colno: columnNumber } = error
+  return Object.freeze({
+    ...error,
+
+    from: {
+      line: lineNumber - 1,
+      ch: columnNumber - 1,
+    },
+    to: {
+      line: lineNumber - 1,
+      ch: columnNumber,
+    },
+  })
 }
 
 export default {
@@ -17,12 +31,10 @@ export default {
 
   state: {
     code: window.localStorage.getItem('code') || TEMPLATE,
-    compiledCode: '',
-    error: '',
+    error: null,
     view: window.localStorage.getItem('view') || 'sprite',
     paused: false,
     running: false,
-    sprites: [],
     mainCtx: null,
     hasBeenRun: false,
   },
@@ -59,7 +71,7 @@ export default {
       state.paused = pause
     },
     setError (state, error) {
-      state.error = error
+      state.error = error ? convertError(error) : null
     },
     initMainCtx (state, ctx) {
       state.mainCtx = ctx
@@ -70,7 +82,7 @@ export default {
     run ({ state, commit, rootGetters, rootState }) {
       commit('setView', 'game')
       commit('setRunning', false)
-      commit('setError', '')
+      commit('setError', null)
 
       // TODO: lint code and set error state variable
 
@@ -92,12 +104,17 @@ export default {
 
         const code = prepareCode(state.code)
 
-        try {
-          // eslint-disable-next-line
-          eval(code)
-        } catch (e) {
-          commit('setError', e.message)
+        window.onerror = (message, source, lineno, colno, error) => {
+          commit('setError', { message, source, lineno, colno, error })
+          commit('setRunning', false)
         }
+
+        // eslint-disable-next-line
+        eval(code)
+
+        // error handling done in window event listener because that's the only way to
+        // get an error from an eval statement
+        // https://stackoverflow.com/a/26929319
       })
     },
   },
