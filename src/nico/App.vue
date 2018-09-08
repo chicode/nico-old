@@ -33,7 +33,6 @@ export default {
 @import '../styles/index.styl'
 
 .app {
-  height: 100%;
   margin: 30px;
 }
 </styles>
