@@ -1,12 +1,13 @@
 <template>
   <div class="game">
-    <canvas
-      ref="mainCanvas"
-      class="main-canvas"
-    />
     <p v-if="error">
       {{ error }}
     </p>
+    <canvas
+      v-else
+      ref="mainCanvas"
+      class="main-canvas"
+    />
   </div>
 </template>
 
