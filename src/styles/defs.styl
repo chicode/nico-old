@@ -9,10 +9,14 @@ palette = {
   light-blue: #C0D9FF,
   light-orange: #FFEAD1,
   gray-1: #C4C4C4,
+  gray-2: #E5E5E5,
+  gray-3: #F7F7F7,
 }
 // where the base colors should be used
 colors = {
   shadow: palette.gray-1,
+  light-border: palette.gray-2,
+  light-background: palette.gray-3,
   accent-1: palette.purple,
   accent-2: palette.blue,
   warning: palette.orange,
@@ -21,11 +25,18 @@ colors = {
 
 border-radius = 10px
 border-width = 3px
+
+standard-border() {
+  border: border-width solid black;
+  border-radius: border-radius;
+}
+
 transition-duration = .1s
 font-sizes = 60px 40px 30px 20px
 fonts = {
   heading: Comfortaa,
   body: Karla,
+  code: Fantasque Sans Mono,
 }
 
 absolute() {
@@ -48,9 +59,10 @@ psuedo-element() {
   content: "";
 }
 
-border() {
-  border: border-width solid black;
-  border-radius: border-radius;
+light-border-width = 2px
+
+light-border() {
+  border: light-border-width solid colors.light-border;
 }
 
 
@@ -65,7 +77,7 @@ tile(shadow-offset, background-color) {
   display: inline-block;
 
   div {
-    border()
+    standard-border()
     transition-duration: transition-duration;
     background-color: background-color;
 
@@ -77,7 +89,7 @@ tile(shadow-offset, background-color) {
   // the tile shadow
   &::after {
     psuedo-element()
-    border()
+    standard-border()
     bottom: -1 * shadow-offset / 2;
     z-index: -1;
     background: colors.shadow;

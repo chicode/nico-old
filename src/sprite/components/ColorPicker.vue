@@ -41,6 +41,6 @@ export default {
 .color {
   width: 20px;
   height: 20px;
-  border: border-width solid black;
+  standard-border()
 }
 </style>

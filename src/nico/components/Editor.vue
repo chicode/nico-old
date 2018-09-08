@@ -1,5 +1,7 @@
 <template>
   <div class="editor">
+    <Booklet />
+
     <codemirror
       ref="cm"
       :options="$options.cmOptions"
@@ -19,10 +21,12 @@ import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/addon/display/autorefresh.js'
 
+import Booklet from './Booklet'
+
 export default {
   name: 'Editor',
 
-  components: { codemirror },
+  components: { codemirror, Booklet },
 
   cmOptions: {
     tabSize: 2,
@@ -72,11 +76,13 @@ export default {
 </style>
 
 <style lang="stylus">
+@import "~@/styles/defs.styl"
+
 .CodeMirror {
   height: 100%;
 
   * {
-    font-family: 'Fantasque Sans Mono';
+    font-family: fonts.code;
   }
 }
 

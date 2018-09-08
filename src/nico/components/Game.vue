@@ -20,6 +20,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+
 import { initCtx, initCanvas } from '../../sprite/helpers'
 
 export default {
@@ -48,7 +49,7 @@ export default {
 
 .game {
   .main-canvas {
-    border()
+    standard-border()
   }
 }
 </style>
