@@ -55,11 +55,15 @@ export default {
   BOOKLET_SECTIONS,
 
   data: () => ({
-    expanded: true,
+    expanded: false,
     section: BOOKLET_SECTIONS[window.localStorage.getItem('booklet-section') || 0],
   }),
 
   mounted () {
+    this.correctWidth()
+  },
+
+  updated () {
     this.correctWidth()
   },
 
