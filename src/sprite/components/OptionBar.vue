@@ -46,6 +46,7 @@ export default {
 
   margin-left: 50px;
   display: flex;
+  align-items: center;
 
   & > * {
     margin-right: 30px;

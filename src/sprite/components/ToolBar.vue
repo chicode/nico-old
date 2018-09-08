@@ -62,6 +62,7 @@ button img {
 
 .tools {
   display: flex;
+  align-items: center;
 
   .bucket, .circle-select {
     margin-right: 30px;
