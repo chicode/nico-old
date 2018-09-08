@@ -2,7 +2,7 @@
   <div class="editor">
     <codemirror
       ref="cm"
-      :options="cmOptions"
+      :options="$options.cmOptions"
       :value="code"
       class="vue-CodeMirror"
       @input="setCode"
@@ -24,18 +24,15 @@ export default {
 
   components: { codemirror },
 
-  data () {
-    return {
-      cmOptions: {
-        tabSize: 2,
-        mode: 'text/javascript',
-        lineNumbers: true,
-        autorefresh: true,
-      },
-    }
+  cmOptions: {
+    tabSize: 2,
+    mode: 'text/javascript',
+    lineNumbers: true,
+    autorefresh: true,
   },
+
   computed: {
-    ...mapState('nico', ['code', 'error']),
+    ...mapState('nico', ['code', 'view', 'error']),
     cm () {
       return this.$refs.cm.codemirror
     },
@@ -44,7 +41,14 @@ export default {
   watch: {
     error (error) {
       if (error) {
-        this.cm.markText(error.from, error.to, { className: 'error', atomic: true })
+        if (this.mark) this.mark.clear()
+        this.mark = this.cm.markText(error.from, error.to, { className: 'error', atomic: true })
+      }
+    },
+
+    view (view) {
+      if (view === 'editor') {
+        this.cm.refresh()
       }
     },
   },

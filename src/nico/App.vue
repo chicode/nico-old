@@ -3,7 +3,13 @@
     <Header />
     <!-- https://vuejs.org/v2/guide/components.html#Dynamic-Components -->
     <keep-alive>
-      <component :is="view"/>
+      <Game v-show="view === 'game'" />
+    </keep-alive>
+    <keep-alive>
+      <Editor v-show="view === 'editor'" />
+    </keep-alive>
+    <keep-alive>
+      <Sprite v-show="view === 'sprite'" />
     </keep-alive>
   </div>
 </template>

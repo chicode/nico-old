@@ -4,10 +4,16 @@ import mars from '!raw-loader!./mars.raw'
 
 import { TEMPLATE } from './constants'
 
+// account for mars going in front of user code
+// this is done in order to allow for accurate error line numbers
+const MARS_LINES = mars.split('\n').length
+
 // combines user code with the mars library to make a runnable program
+// mars goes in front so that a user syntax error does not accidentally
+// propogate to the mars code
 function prepareCode (code) {
-  return `${code}
-  ${mars}`
+  return `${mars}
+  ${code}`
 }
 
 function convertError (error) {
@@ -16,11 +22,11 @@ function convertError (error) {
     ...error,
 
     from: {
-      line: lineNumber - 1,
+      line: lineNumber - 1 - MARS_LINES,
       ch: columnNumber - 1,
     },
     to: {
-      line: lineNumber - 1,
+      line: lineNumber - 1 - MARS_LINES,
       ch: columnNumber,
     },
   })
@@ -102,15 +108,13 @@ export default {
           state,
         }
 
-        const code = prepareCode(state.code)
-
         window.onerror = (message, source, lineno, colno, error) => {
           commit('setError', { message, source, lineno, colno, error })
           commit('setRunning', false)
         }
 
         // eslint-disable-next-line
-        eval(code)
+        eval(prepareCode(state.code))
 
         // error handling done in window event listener because that's the only way to
         // get an error from an eval statement
