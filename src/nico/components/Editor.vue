@@ -41,7 +41,6 @@ export default {
   watch: {
     error (error) {
       if (error && error.isSyntax) {
-        // console.log(error.from, error.to)
         if (this.mark) this.mark.clear()
         this.mark = this.cm.markText(error.from, error.to, { className: 'error', atomic: true })
       }
