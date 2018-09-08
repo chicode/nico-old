@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <canvas ref="mainCanvas" />
+  <div class="game">
+    <canvas
+      ref="mainCanvas"
+      class="main-canvas"
+    />
     <p v-if="error">
       {{ error }}
     </p>
@@ -31,3 +34,13 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="stylus">
+@import '~@/styles/defs.styl'
+
+.game {
+  .main-canvas {
+    border()
+  }
+}
+</style>
