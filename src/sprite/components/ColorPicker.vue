@@ -35,6 +35,7 @@ export default {
 .colorpicker {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .color {

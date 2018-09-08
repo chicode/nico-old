@@ -31,6 +31,7 @@ export default {
 
 <style scoped lang="stylus">
 .sizeslider {
-  max-width: 30%;
+  max-width: 200px;
+  height: 100%;
 }
 </style>
