@@ -8,12 +8,25 @@ import { TEMPLATE } from './constants'
 // this is done in order to allow for accurate error line numbers
 const MARS_LINES = mars.split('\n').length
 
+// different browserss set colno to be different (for some reason )
+const COLUMN_OFFSET = (() => {
+  if (navigator.userAgent.includes('Chrome')) {
+    return -2
+  } else {
+    return -1
+  }
+})()
+
 // combines user code with the mars library to make a runnable program
 // mars goes in front so that a user syntax error does not accidentally
 // propogate to the mars code
 function prepareCode (code) {
   return `${mars}
   ${code}`
+}
+
+function lowerLimit (n) {
+  return n < 0 ? 0 : n
 }
 
 function convertError (error) {
@@ -23,11 +36,11 @@ function convertError (error) {
 
     from: {
       line: lineNumber - 1 - MARS_LINES,
-      ch: columnNumber - 1,
+      ch: lowerLimit(columnNumber + COLUMN_OFFSET - 1),
     },
     to: {
       line: lineNumber - 1 - MARS_LINES,
-      ch: columnNumber,
+      ch: lowerLimit(columnNumber + COLUMN_OFFSET),
     },
   })
 }
