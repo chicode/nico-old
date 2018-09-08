@@ -13,12 +13,12 @@
       <button
         class="button run"
         @click="run"
-      >run code</button>
+      ><div>run code</div></button>
       <button
         :disabled="pauseDisabled"
         class="button"
         @click="togglePause"
-      >{{ paused ? 'resume' : '&nbsp;pause&nbsp;' }}</button>
+      ><div>{{ paused ? 'resume' : '&nbsp;pause&nbsp;' }}</div></button>
 
       <!-- nbsp exists in order to make button the same width between modes -->
     </div>
