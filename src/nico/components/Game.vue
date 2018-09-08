@@ -1,10 +1,17 @@
 <template>
   <div class="game">
-    <p v-if="error">
+    <p
+      v-if="error"
+      class="error"
+    >
       {{ error }}
     </p>
+    <p v-else-if="!hasBeenRun">
+      press "run code" to run your game for the first time!
+    </p>
+    <!-- v-show has to be used because the ref needs to be initiated -->
     <canvas
-      v-else
+      v-show="!error && hasBeenRun"
       ref="mainCanvas"
       class="main-canvas"
     />
@@ -19,7 +26,7 @@ export default {
   name: 'Game',
 
   computed: {
-    ...mapState('nico', ['error']),
+    ...mapState('nico', ['error', 'hasBeenRun']),
   },
 
   mounted () {

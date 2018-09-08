@@ -24,6 +24,7 @@ export default {
     running: false,
     sprites: [],
     mainCtx: null,
+    hasBeenRun: false,
   },
 
   getters: {
@@ -52,6 +53,7 @@ export default {
     },
     setRunning (state, running) {
       state.running = running
+      state.hasBeenRun = true
     },
     setPaused (state, pause) {
       state.paused = pause
