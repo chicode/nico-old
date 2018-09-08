@@ -31,8 +31,16 @@ function lowerLimit (n) {
 
 function convertError (error) {
   const { lineno: lineNumber, colno: columnNumber } = error
+
+  // error came from the mars part of the code
+  // this means that it was raised intentionally
+  if (lineNumber - 1 - MARS_LINES < 0) {
+    return Object.freeze(error.error)
+  }
+
   return Object.freeze({
     ...error,
+    isSyntax: true,
 
     from: {
       line: lineNumber - 1 - MARS_LINES,
