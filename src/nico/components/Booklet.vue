@@ -56,7 +56,7 @@ export default {
 
   data: () => ({
     expanded: true,
-    section: BOOKLET_SECTIONS[0],
+    section: BOOKLET_SECTIONS[window.localStorage.getItem('booklet-section') || 0],
   }),
 
   mounted () {
@@ -69,6 +69,7 @@ export default {
     },
     switchSection (section) {
       this.section = section
+      window.localStorage.setItem('booklet-section', BOOKLET_SECTIONS.indexOf(this.section))
     },
     correctWidth () {
       if (this.$refs.sectionsBuffer) {
