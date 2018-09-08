@@ -2,15 +2,9 @@
   <div class="app">
     <Header />
     <!-- https://vuejs.org/v2/guide/components.html#Dynamic-Components -->
-    <keep-alive>
-      <Game v-show="view === 'game'" />
-    </keep-alive>
-    <keep-alive>
-      <Editor v-show="view === 'editor'" />
-    </keep-alive>
-    <keep-alive>
-      <Sprite v-show="view === 'sprite'" />
-    </keep-alive>
+    <Game v-show="view === 'game'" />
+    <Editor v-show="view === 'editor'" />
+    <Sprite v-show="view === 'sprite'" />
   </div>
 </template>
 
