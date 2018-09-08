@@ -61,7 +61,7 @@ export default {
   state: {
     code: window.localStorage.getItem('code') || TEMPLATE,
     error: null,
-    view: window.localStorage.getItem('view') || 'sprite',
+    view: window.localStorage.getItem('view') || 'game',
     paused: false,
     running: false,
     mainCtx: null,

@@ -6,9 +6,7 @@
     >
       {{ error.message }}
     </p>
-    <p v-else-if="!hasBeenRun">
-      press "run code" to run your game for the first time!
-    </p>
+    <Greeting v-else-if="!hasBeenRun" />
     <!-- v-show has to be used because the ref needs to be initiated -->
     <canvas
       v-show="running"
@@ -23,8 +21,12 @@ import { mapMutations, mapState } from 'vuex'
 
 import { initCtx, initCanvas } from '../../sprite/helpers'
 
+import Greeting from './Greeting'
+
 export default {
   name: 'Game',
+
+  components: { Greeting },
 
   computed: {
     ...mapState('nico', ['error', 'hasBeenRun', 'running']),
